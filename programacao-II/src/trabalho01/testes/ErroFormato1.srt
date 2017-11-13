@@ -1,0 +1,21 @@
+1
+00:00:02,064 --> 00:00:05,000
+2012 - 100 anos do nascimento de Alan Turing
+
+2
+00:00:05,100 --> 00:00:06,400
+Exposição no Museu da Ciência - Londres
+
+3
+00:00:07,054 --> 00:00:11,300
+ Alan Turing foi uma figura muito significativa no século 20.
+
+
+
+9
+00:00:31,092 --> 00:00:32,164
+
+10
+00:00:33,064 --> 00:00:36,091
+
+// há várias linhas em branco entre 3 e 9
