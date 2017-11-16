@@ -31,4 +31,9 @@ public class Palavra {
 	public String getReconhecimento() {
 		return reconhecimento.get();
 	}
+
+	public String validaPalavra(String palavra) {
+		//TODO: Implementar
+		return "";
+	}
 }

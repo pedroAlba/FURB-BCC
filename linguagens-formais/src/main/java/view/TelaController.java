@@ -74,5 +74,13 @@ public class TelaController implements Initializable {
 
 		 //TODO: Implementar reconhecimento das palavras.
 		 listPalavras.add(new Palavra(100, "resultado", "sequencia", "reconhecimento"));
+
+		 for(String word : textArea.textProperty().getValue().split("\r\n")) {
+
+
+		 }
 	}
+
+
+
 }
