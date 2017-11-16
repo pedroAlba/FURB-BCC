@@ -3,10 +3,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-/*
- * To change this template, choose Tools | Templates and open the template in
- * the editor.
- */
 
 /**
  *
@@ -21,6 +17,7 @@ public class MVM {
     static int iPosicaoInstrucoes = 0; //para pegar do arraylist a instruçao que esta sendo executada
     static int iValorInicialPilha = -1;
 	public static boolean halt;
+	public static byte flag;
 
     private static String converterASCII(int ax) {
         char ch = (char) ax;
@@ -40,6 +37,7 @@ public class MVM {
         ip = 0; 
         ri = 0;
         iPosicaoInstrucoes = 0;
+        flag = 0;
     }
     
     public int getAcessosMemoria() {
@@ -596,9 +594,32 @@ public class MVM {
                    
                     acessosMemoria++;
                     break;
-
                     
-                default: {
+                case 55: //pushf
+                	tela.appendLog(ip+" - Executou push f");
+                    mem[sp] = (short) flag;
+                    sp--;
+                    acessosMemoria++;
+                    
+                    acessosMemoria++;
+                    break;
+                	
+                case 56: //popf
+                	tela.appendLog(ip+" - Executou popf");
+                    sp++;
+                    flag = (byte) mem[sp];
+                    acessosMemoria++;                    
+                    acessosMemoria++;                	
+                	break;
+                	
+                case 57: //setbit, ax                	
+                	flag = (byte) (ax ^ flag);
+                	break;
+                	
+                case 58: //resetbit, ax
+                	throw new UnsupportedOperationException();
+                	
+			default: {
                     repetir = false;
                     tela.appendLog("Saiu.");
                     System.out.println("Saiu.");
@@ -608,8 +629,7 @@ public class MVM {
                     tela.appendLog("ERRO: a memoria nao pode ser lida.");
                     System.out.println("ERRO: a memoria nao pode ser lida.");
                     repetir = false;
-                }
-            }
+                }            }
             int spAux = iValorInicialPilha;
             tela.LimpaPilha();
             if(spAux <= 0){
@@ -641,13 +661,6 @@ public class MVM {
         tela.setTextSaida("AX = "+ax);
     }
     
-    //        Path pathArquivo = Paths.get(sArquivo);
-//        BufferedReader ler = new BufferedReader(new FileReader(pathArquivo.toFile()));
-//        LineNumberReader lnr = new LineNumberReader(new FileReader(pathArquivo.toFile()));
-//        lnr.skip(Long.MAX_VALUE);
-//        int f = lnr.getLineNumber()+1;
-//        if (Files.exists(pathArquivo)){
-
     public static void codificador(short mem[], /*String sArquivo,*/ short shPosicao, ArrayList<String> arrayInstrucoes) throws FileNotFoundException, IOException {
         String sConteudo = "";
         short iMem = shPosicao;
@@ -1058,6 +1071,30 @@ public class MVM {
                 //acessosMemoria++;
             } else if (sConteudo.matches("[0-9]+")){
                 mem[iMem++] = Short.valueOf(sConteudo);      
+            }
+            else if(sConteudo.equals("pushf")){
+                mem[iMem++] = 55;
+            }
+            else if(sConteudo.equals("popf")){
+                mem[iMem++] = 56;
+            }
+            else if(sConteudo.equals("setbit")){                
+                mem[iMem++] = 57;
+                iPosConteudo = 8;
+                String sAux = "";
+                while(sConteudo.charAt(iPosConteudo) != '}'){
+                    sAux += sConteudo.charAt(iPosConteudo++);
+                }
+                mem[iMem] = Short.parseShort(sAux);
+            }
+            else if(sConteudo.equals("resetbit")){
+                mem[iMem++] = 58;
+                iPosConteudo = 8;
+                String sAux = "";
+                while(sConteudo.charAt(iPosConteudo) != '}'){
+                    sAux += sConteudo.charAt(iPosConteudo++);
+                }
+                mem[iMem] = Short.parseShort(sAux);
             }
             else{
                 JOptionPane.showMessageDialog(null, "Instrução inválida, será finalizada a ação.");
