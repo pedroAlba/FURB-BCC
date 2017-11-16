@@ -13,7 +13,8 @@ public class MessageBox {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("Desenvolvedores");
 		alert.setHeaderText(null);
-		alert.setContentText("Joaozinho da silva");
+		alert.setContentText("Pedro Henrique Pereira Alba \n" +
+				              "Renato Constancio Filho");
 		alert.showAndWait();
 	}
 }

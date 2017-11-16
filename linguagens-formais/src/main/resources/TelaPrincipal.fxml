@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
 <?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import org.fxmisc.richtext.CodeArea?>
+<?import org.fxmisc.richtext.CodeArea?> 
 
 <AnchorPane minWidth="865.0" prefHeight="410.0" prefWidth="865.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.TelaController">	
-   <children>   
-   
-   
-<CodeArea fx:id="textArea" layoutX="11.0" layoutY="8.0" prefHeight="175.0" prefWidth="847.0"  style="-fx-vbar-policy: always; -fx-hbar-policy: always;" />
-      
+   <children>
+      <CodeArea fx:id="textArea" layoutX="11.0" layoutY="8.0" prefHeight="175.0" prefWidth="847.0"  style="-fx-vbar-policy: always; -fx-hbar-policy: always;" />     
       <Button fx:id="btnAnalisar" layoutX="11.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#btnAnalisarOnClick" prefHeight="25.0" prefWidth="211.0" text="Analisar" />
       <Button fx:id="btnLimpar" layoutX="327.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#btnLimparOnClick" prefHeight="25.0" prefWidth="211.0" text="Limpar" />
       <Button fx:id="btnEquipe" layoutX="648.0" layoutY="193.0" mnemonicParsing="false" onMouseClicked="#btnEquipeOnClick" prefHeight="25.0" prefWidth="211.0" text="Equipe" />
-      <TableView layoutX="14.0" layoutY="228.0" prefHeight="175.0" prefWidth="847.0">
+      <TableView fx:id="tabela" layoutX="14.0" layoutY="228.0" prefHeight="175.0" prefWidth="847.0">
         <columns>
-          <TableColumn minWidth="0.0" prefWidth="91.66667175292969" text="Linha" />
-          <TableColumn prefWidth="200.00003051757812" text="Resultado" />
-           <TableColumn prefWidth="109.66668701171875" text="Sequencia" />
-          <TableColumn minWidth="0.0" prefWidth="520.3333129882812" text="Reconhecimento" />
+          <TableColumn fx:id="linha" minWidth="0.0" prefWidth="194.0" text="Linha" />
+          <TableColumn fx:id="resultado" prefWidth="200.00003051757812" text="Resultado" />
+          <TableColumn fx:id="sequencia" prefWidth="109.66668701171875" text="Sequencia" />
+          <TableColumn fx:id="reconhecimento" minWidth="0.0" prefWidth="340.0" text="Reconhecimento" />
         </columns>
-      </TableView>    
+      </TableView>
    </children>
 </AnchorPane>
