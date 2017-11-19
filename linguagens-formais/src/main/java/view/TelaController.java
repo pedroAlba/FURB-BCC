@@ -1,7 +1,9 @@
 package view;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 import org.fxmisc.richtext.CodeArea;
 import org.fxmisc.richtext.LineNumberFactory;
@@ -14,8 +16,18 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Palavra;
+import javafx.application.Application;
+import javafx.event.*;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
+import model.AutomatoFinito;
+import model.Palavra;
+@SuppressWarnings("restriction")
 public class TelaController implements Initializable {
 
 	@FXML private CodeArea textArea;
@@ -34,7 +46,6 @@ public class TelaController implements Initializable {
 	/**
 	 * Ponto de entrada para a classe de controller;
 	 */
-	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		textArea.setParagraphGraphicFactory(LineNumberFactory.get(textArea));
@@ -56,6 +67,18 @@ public class TelaController implements Initializable {
 		);
 
 		tabela.setItems(listPalavras);
+		
+		Image imageLupa = new Image(getClass().getClassLoader().getResourceAsStream("imagens/loupe.png"));
+		btnAnalisar.setContentDisplay(ContentDisplay.RIGHT);
+		btnAnalisar.setGraphic(new ImageView(imageLupa));
+		
+		Image imageLimpa = new Image(getClass().getClassLoader().getResourceAsStream("imagens/clear-button.png"));
+		btnLimpar.setContentDisplay(ContentDisplay.RIGHT);
+		btnLimpar.setGraphic(new ImageView(imageLimpa));
+		
+		Image imageTeam = new Image(getClass().getClassLoader().getResourceAsStream("imagens/team.png"));
+		btnEquipe.setContentDisplay(ContentDisplay.RIGHT);
+		btnEquipe.setGraphic(new ImageView(imageTeam));
 	}
 
 	@FXML
@@ -71,16 +94,21 @@ public class TelaController implements Initializable {
 
 	@FXML
 	public void btnAnalisarOnClick() {
-
-		 //TODO: Implementar reconhecimento das palavras.
-		 listPalavras.add(new Palavra(100, "resultado", "sequencia", "reconhecimento"));
-
-		 for(String word : textArea.textProperty().getValue().split("\r\n")) {
-
-
-		 }
+		
+		String[] linhas = textArea.textProperty().getValue().split("\n");
+		
+		for (int i = 0; i < linhas.length; i++) {
+			
+			String linhaAtual = linhas[i];
+			
+			 for (String wordSplitted : Arrays.asList(linhaAtual.split(" "))
+					 						  .stream()
+					 						  .filter(s -> ! s.isEmpty())
+					 						  .collect(Collectors.toList())) {
+				 
+				 listPalavras.add(AutomatoFinito.validaPalavra(wordSplitted, i + 1));
+			}
+			
+		}
 	}
-
-
-
 }

@@ -1,7 +1,10 @@
 package model;
+
+import java.util.List;
+
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-
+@SuppressWarnings("restriction")
 public class Palavra {
 
 	private final SimpleIntegerProperty linha;
@@ -30,10 +33,5 @@ public class Palavra {
 
 	public String getReconhecimento() {
 		return reconhecimento.get();
-	}
-
-	public String validaPalavra(String palavra) {
-		//TODO: Implementar
-		return "";
 	}
 }

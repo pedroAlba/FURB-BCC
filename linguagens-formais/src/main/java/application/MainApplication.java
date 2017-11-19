@@ -6,8 +6,10 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+@SuppressWarnings("restriction")
 public class MainApplication extends Application{
 
 
@@ -24,12 +26,9 @@ public class MainApplication extends Application{
 		Scene scene = new Scene(mainParent);
 		Stage stage = new Stage();
 		stage.setScene(scene);
-		stage.setResizable(false);
-
-
-		String css = this.getClass().getClassLoader().getResource("Estilo.css").toExternalForm();
-		scene.getStylesheets().add(css);
-
+		stage.setResizable(false);		
+		stage.getIcons().add(new Image(this.getClass().getClassLoader().getResource("imagens/binary-code.png").toString()));
+		stage.setTitle("Reconhecedor de linguagem regular");
 		stage.show();
 	}
 }
