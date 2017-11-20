@@ -13,18 +13,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.application.Application;
-import javafx.event.*;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.image.*;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import model.AutomatoFinito;
 import model.Palavra;
 @SuppressWarnings("restriction")
@@ -46,6 +40,7 @@ public class TelaController implements Initializable {
 	/**
 	 * Ponto de entrada para a classe de controller;
 	 */
+	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 		textArea.setParagraphGraphicFactory(LineNumberFactory.get(textArea));
@@ -67,15 +62,15 @@ public class TelaController implements Initializable {
 		);
 
 		tabela.setItems(listPalavras);
-		
+
 		Image imageLupa = new Image(getClass().getClassLoader().getResourceAsStream("imagens/loupe.png"));
 		btnAnalisar.setContentDisplay(ContentDisplay.RIGHT);
 		btnAnalisar.setGraphic(new ImageView(imageLupa));
-		
+
 		Image imageLimpa = new Image(getClass().getClassLoader().getResourceAsStream("imagens/clear-button.png"));
 		btnLimpar.setContentDisplay(ContentDisplay.RIGHT);
 		btnLimpar.setGraphic(new ImageView(imageLimpa));
-		
+
 		Image imageTeam = new Image(getClass().getClassLoader().getResourceAsStream("imagens/team.png"));
 		btnEquipe.setContentDisplay(ContentDisplay.RIGHT);
 		btnEquipe.setGraphic(new ImageView(imageTeam));
@@ -94,21 +89,15 @@ public class TelaController implements Initializable {
 
 	@FXML
 	public void btnAnalisarOnClick() {
-		
-		String[] linhas = textArea.textProperty().getValue().split("\n");
-		
-		for (int i = 0; i < linhas.length; i++) {
-			
-			String linhaAtual = linhas[i];
-			
-			 for (String wordSplitted : Arrays.asList(linhaAtual.split(" "))
-					 						  .stream()
-					 						  .filter(s -> ! s.isEmpty())
-					 						  .collect(Collectors.toList())) {
-				 
-				 listPalavras.add(AutomatoFinito.validaPalavra(wordSplitted, i + 1));
+		int linhaAtual = 0;
+		for (String string : Arrays.asList(textArea.textProperty().getValue().split("\n"))) {
+
+			for (String palavra: Arrays.asList(string.split(" ")).stream()
+																 .filter(s -> ! s.isEmpty())
+																 .collect(Collectors.toList())) {
+
+				 listPalavras.add(AutomatoFinito.validaPalavra(palavra, linhaAtual++));
 			}
-			
 		}
 	}
 }
