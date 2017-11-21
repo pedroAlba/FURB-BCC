@@ -26,7 +26,7 @@ public class MainApplication extends Application{
 		Scene scene = new Scene(mainParent);
 		Stage stage = new Stage();
 		stage.setScene(scene);
-		stage.setResizable(false);		
+		stage.setResizable(false);
 		stage.getIcons().add(new Image(this.getClass().getClassLoader().getResource("imagens/binary-code.png").toString()));
 		stage.setTitle("Reconhecedor de linguagem regular");
 		stage.show();

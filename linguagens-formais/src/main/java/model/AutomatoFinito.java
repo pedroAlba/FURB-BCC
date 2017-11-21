@@ -41,15 +41,15 @@ public class AutomatoFinito {
                 }
                 if (linhaAtual == -1) {
                     erro = true;
-                    resultado.append("erro: palavra inválida");
+                    resultado.append("erro: palavra invÃ¡lida");
                     reconhecimento.append(" - ERRO");
                 }
                 if (coluna == tabelaTransicao[0].length - 1 && !encontrou) {
                     erro = true;
                     if(c.contains("+") || c.contains(";") || c.contains(".")){
-                    	resultado.append("símbolo especial");
+                    	resultado.append("sÃ­mbolo especial");
                     }else {
-                        resultado.append("erro: símbolo(s) inválido(s)");
+                        resultado.append("erro: sÃ­mbolo(s) invÃ¡lido(s)");
                     }
                     reconhecimento.append(" - ERRO");
                 }
@@ -58,10 +58,10 @@ public class AutomatoFinito {
 
         if (! erro) {
             if (tabelaTransicao[linhaAtual][0].equals(ESTADO_FINAL)) {
-                resultado.append("palavra válida");
+                resultado.append("palavra vÃ¡lida");
                 reconhecimento.append(tabelaTransicao[linhaAtual][1]);
             } else {
-                resultado.append("erro: palavra inválida");
+                resultado.append("erro: palavra invÃ¡lida");
                 reconhecimento.append(tabelaTransicao[linhaAtual][1] + ", - ERRO");
             }
         }

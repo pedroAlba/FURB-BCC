@@ -43,6 +43,9 @@ public class TelaController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
+		//Esse é um componente externo da biblioteca nativa do JavaFX. Utilizamos ele
+		//por conter a borda numérica. Porém, a principio, o componente não tem suporte
+		//a scrollPane.
 		textArea.setParagraphGraphicFactory(LineNumberFactory.get(textArea));
 
 		linha.setCellValueFactory(
@@ -96,7 +99,7 @@ public class TelaController implements Initializable {
 																 .filter(s -> ! s.isEmpty())
 																 .collect(Collectors.toList())) {
 
-				 listPalavras.add(AutomatoFinito.validaPalavra(palavra, linhaAtual++));
+				 listPalavras.add(AutomatoFinito.validaPalavra(palavra, linhaAtual + 1));
 			}
 		}
 	}
