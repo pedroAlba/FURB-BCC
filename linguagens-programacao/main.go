@@ -1,10 +1,12 @@
 package main
 
 import (
+	"strings"
     "fmt"
-    "net/http"    
-	"log" 
+    "net/http"
+	"log"
 	"encoding/json"
+	"strconv"
 )
 
 func main() {
@@ -12,20 +14,31 @@ func main() {
     err := http.ListenAndServe(":9090", nil) // set listen port
     if err != nil {
         log.Fatal("ListenAndServe: ", err)
-    }	
+    }
 }
 
-func serve(w http.ResponseWriter, r *http.Request) {	
+func serve(w http.ResponseWriter, r *http.Request) {
 
-	var pessoa = geradorPessoa()
+	var path = r.URL.Path;
+	path = strings.Replace(path, "/", "", 10)
+	qtdPessoas, e := strconv.Atoi(path)
 
-	pessoaJ := &Pessoa{Nome: pessoa.Nome, Sobrenome: pessoa.Sobrenome, Pai: pessoa.Pai, Mae:pessoa.Mae, Cpf: pessoa.Cpf, Sexo: pessoa.Sexo, Aniversario: pessoa.Aniversario}
-	b, err := json.Marshal(pessoaJ)
-
-	if err != nil {
-        fmt.Println(err)
-        return
+	if e != nil{
+		qtdPessoas = 1
 	}
-	
-	fmt.Fprintf(w, string(b)) // send data to client side
+
+	for i := 0; i < qtdPessoas ; i++ {
+
+		var pessoa = geradorPessoa()
+
+		pessoaJ := &Pessoa{Nome: pessoa.Nome, Sobrenome: pessoa.Sobrenome, Pai: pessoa.Pai, Mae:pessoa.Mae, Cpf: pessoa.Cpf, Sexo: pessoa.Sexo, Aniversario: pessoa.Aniversario}
+		b, err := json.Marshal(pessoaJ)
+
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Fprintf(w, string(b)) // send data to client side
+	}
 }
