@@ -13,6 +13,8 @@ func GeraNumeroPrincipal() {
 	for i := 0; i < 9; i++ {
 		CPF[i] = rand.Intn(10)
 	}
+	CPF[9] = 0
+	CPF[10] = 0
 }
 
 // GeraDigitoVerificador é metodo privado, por isso iniciado com letra maiúscula,
@@ -35,13 +37,15 @@ func GeraDigitoVerificador(posicao int) {
 	for i := 0; i < qtdFor; i++ {
 		totalSomatoria += arrayMultiplicados[i]
 	}
-	var restoDaDivisao = totalSomatoria % 11
+	var restoDaDivisao int
+	restoDaDivisao = totalSomatoria % 11
 	if restoDaDivisao < 2 {
 		// Adiciona o valor na posição do for + 2 para colocar na próxima posição no array
 		CPF[(qtdFor - 1)] = 0
 	} else {
 		CPF[(qtdFor - 1)] = 11 - restoDaDivisao
 	}
+
 }
 
 func ConverteCPF() string {
