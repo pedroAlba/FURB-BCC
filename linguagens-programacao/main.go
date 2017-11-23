@@ -40,5 +40,6 @@ func serve(w http.ResponseWriter, r *http.Request) {
 		}
 
 		fmt.Fprintf(w, string(b)) // send data to client side
+		fmt.Fprintf(w, string("\n")) // send data to client side
 	}
 }
