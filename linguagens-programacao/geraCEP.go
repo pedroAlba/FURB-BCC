@@ -2,29 +2,36 @@ package main
 
 import (
 	"fmt"
-	"net/http"
-	"strconv"
+	"net/http"	
 	"math/rand"	
 	"io/ioutil"
-	"strings"
+	"encoding/json"	
 )
 
-func geraCEP() string {
-	//var cepNumber = getRandomCEP();
-	var cep = strconv.Itoa(rangeIn(10000000, 99999999))
-	return request(cep)
+var Endpoints = [...]string{"https://viacep.com.br/ws/SC/Blumenau/Alameda/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Missoes/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Martin/json/ ",
+						"https://viacep.com.br/ws/SC/Blumenau/Avenida/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Rodovia/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Via/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Alm/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Pas/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Sao/json/",
+						"https://viacep.com.br/ws/SC/Blumenau/Rua/json/"}
+
+
+func geraCEP() string {	
+	return request(Endpoints[rand.Intn(10)])
 }
 
 func rangeIn(low, hi int) int {
     return low + rand.Intn(hi-low)
 }
 
+//
+func request(endpoint string) string {	
 
-func request(cepNumber string) string {
-
-	fmt.Println("cep gerado " + cepNumber)	
-
-	response, err := http.Get("https://viacep.com.br/ws/" + cepNumber + "/json/")
+	response, err := http.Get(endpoint)
 		if err != nil {
 			fmt.Printf("%s", err)
 			return ""
@@ -34,11 +41,27 @@ func request(cepNumber string) string {
 			if err != nil {
 				fmt.Printf("%s", err)
 				return ""
-			}			
+			}						
 
-			if(strings.Contains(string(contents), "erro")){
-				return request(geraCEP())
+			pingData := string(contents)
+			pingJSON := make(map[string][]CEP)
+			var erro = json.Unmarshal([]byte(pingData), &pingJSON)
+		
+			if erro != nil {
+				panic(err)
 			}
-			return string(contents)
+		
+			fmt.Printf("\n\n json object:::: %+v", pingJSON)			
+			
+			for key, value := range pingJSON {
+				fmt.Println("Key:", key, "Value:", value)
+			}
+			return ""
+		
 		}
+}
+
+
+type CEP struct {
+	Cep, Logradouro, Complemento, Bairro, Localicade, Uf, Ibge string	
 }

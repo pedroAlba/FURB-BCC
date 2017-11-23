@@ -6,7 +6,8 @@ import (
 
 // Pessoa é o objeto principal, que receberá todas as características geradas randomicamente
 type Pessoa struct {
-	Nome, Sobrenome, Pai, Mae, Cpf, Sexo /*, CEP*/, Aniversario string	
+	Nome, Sobrenome, Pai, Mae, Cpf, Sexo , Aniversario string	
+	Cep CEP
 }
 
 func geradorPessoa() Pessoa {
