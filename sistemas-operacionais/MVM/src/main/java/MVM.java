@@ -10,6 +10,9 @@ import javax.swing.JOptionPane;
  */
 public class MVM {
 
+	private final static int BIT01 = 0b00000001;
+	private final static int BIT02 = 0b00000010;
+	
 	private static int acessosMemoria;
     private static TelaExecucao tela;
     public static int botao = 0;
@@ -17,7 +20,10 @@ public class MVM {
     static int iPosicaoInstrucoes = 0; //para pegar do arraylist a instruçao que esta sendo executada
     static int iValorInicialPilha = -1;
 	public static boolean halt;
-	public static byte flag;
+	
+	//Inicializa com valor default
+	private static byte flag = BIT01;	
+	
 
     private static String converterASCII(int ax) {
         char ch = (char) ax;
@@ -523,6 +529,12 @@ public class MVM {
                     sp++;
 
                     bp = mem[sp];
+                    
+                    //flags
+                    
+                    sp++;
+                    
+                    flag = (byte) mem[sp];
 
                     //"ret"
 
@@ -530,7 +542,7 @@ public class MVM {
 
                     ip = mem[sp];
 
-                    ip--;
+                    ip--;                    
                     
                     iPosicaoInstrucoes = ip;
                     acessosMemoria++;
@@ -538,7 +550,7 @@ public class MVM {
                     acessosMemoria++;
                     acessosMemoria++;
                     acessosMemoria++;
-                    acessosMemoria++;
+                    acessosMemoria++;                   
 
                     break;
 
@@ -562,6 +574,10 @@ public class MVM {
 
                     //"push cx" 
                     mem[sp] = (short) cx;
+                    sp--;
+                    
+                    //push flags
+                    mem[sp] = flag;
                     sp--;
 
                     ip = mem[aux + mem[ip + 1]];
@@ -612,12 +628,38 @@ public class MVM {
                     acessosMemoria++;                	
                 	break;
                 	
-                case 57: //setbit, ax                	
-                	flag = (byte) (ax ^ flag);
-                	break;
+                case 57: {//setbit
                 	
-                case 58: //resetbit, ax
-                	throw new UnsupportedOperationException();
+                	char bit = (char) mem[ip+1];
+                	
+                	switch(bit) {
+                	case '0':
+            			flag = (byte) (flag & BIT01);
+            			break;
+                	
+                	case '1':
+            			flag = (byte) (flag & BIT02);
+                		break;
+                	}
+                	
+                	break;
+                }
+                case 58://resetbit
+                {
+                	char bit = (char) mem[ip+1];
+                	
+                	switch(bit) {
+                	case '0':
+            			flag = (byte) (flag ^ BIT01);
+            			break;
+                	
+                	case '1':
+            			flag = (byte) (flag ^ BIT02);
+                		break;
+                	}
+                	
+                	break;
+                }
                 	
 			default: {
                     repetir = false;
@@ -666,6 +708,9 @@ public class MVM {
         short iMem = shPosicao;
         int iPosConteudo = 0;
         
+        if((flag >> 0) != 1){
+        	JOptionPane.showMessageDialog(tela, "Device driver desabilitado");
+        }
         for(String sInstrucao : arrayInstrucoes) {
             if (sInstrucao.trim().equals("")) {
                 iMem++;
@@ -1078,23 +1123,24 @@ public class MVM {
             else if(sConteudo.equals("popf")){
                 mem[iMem++] = 56;
             }
-            else if(sConteudo.equals("setbit")){                
-                mem[iMem++] = 57;
-                iPosConteudo = 8;
-                String sAux = "";
-                while(sConteudo.charAt(iPosConteudo) != '}'){
-                    sAux += sConteudo.charAt(iPosConteudo++);
-                }
-                mem[iMem] = Short.parseShort(sAux);
+            else if(sConteudo.contains("setbit")){               
+            	mem[iMem++] = 57;
+            	iPosConteudo = 6; //tamanho da palavra "setbit"
+            	StringBuilder s = new StringBuilder();
+            	while(iPosConteudo < sConteudo.length()) {
+            		s.append(sConteudo).charAt(iPosConteudo++);
+            	}
+            	mem[iMem] = Short.parseShort(s.toString());
+            	
             }
-            else if(sConteudo.equals("resetbit")){
-                mem[iMem++] = 58;
-                iPosConteudo = 8;
-                String sAux = "";
-                while(sConteudo.charAt(iPosConteudo) != '}'){
-                    sAux += sConteudo.charAt(iPosConteudo++);
-                }
-                mem[iMem] = Short.parseShort(sAux);
+            else if(sConteudo.contains("resetbit")){
+            	mem[iMem++] = 58;
+            	iPosConteudo = 8; //tamanho da palavra "resetbit"
+            	StringBuilder s = new StringBuilder();
+            	while(iPosConteudo < sConteudo.length()) {
+            		s.append(sConteudo).charAt(iPosConteudo++);
+            	}
+            	mem[iMem] = Short.parseShort(s.toString());
             }
             else{
                 JOptionPane.showMessageDialog(null, "Instrução inválida, será finalizada a ação.");
@@ -1112,4 +1158,9 @@ public class MVM {
         main.bLimiteArray = true;
         JOptionPane.showMessageDialog(null, "Limite do array atingido, será finalizada a ação.");
     }
+
+	public static byte getFlag() {
+		return flag;
+	}
+    
 }
