@@ -6,8 +6,7 @@ import (
 	"math/rand"	
 	"io/ioutil"
 	"encoding/json"	
-	"bytes"
-	//"time"
+	"bytes"	
 )
 
 var Endpoints = [...]string{"https://viacep.com.br/ws/SC/Blumenau/Alameda/json/",						
@@ -22,8 +21,7 @@ var Endpoints = [...]string{"https://viacep.com.br/ws/SC/Blumenau/Alameda/json/"
 							"https://viacep.com.br/ws/SC/Blumenau/Rua/json/"}
 
 
-func geraCEP() string {	
-	//rand.Seed(time.Now().UTC().UnixNano())	
+func geraCEP() string {		
 	return request(Endpoints[rand.Intn(10)])	
 }
 
@@ -72,5 +70,3 @@ type CEP struct {
 		Ibge string `json:"ibge"`
 		Gia string `json:"gia"`	
 }
-
-

@@ -4,14 +4,13 @@ import (
 	"strings"
     "fmt"
     "net/http"
-	"log"
-	//"encoding/json"
+	"log"	
 	"strconv"
 )
 
 func main() {
-	http.HandleFunc("/", serve) // set router
-    err := http.ListenAndServe(":9090", nil) // set listen port
+	http.HandleFunc("/", serve) 
+    err := http.ListenAndServe(":9090", nil) 
     if err != nil {
         log.Fatal("ListenAndServe: ", err)
     }
@@ -28,20 +27,8 @@ func serve(w http.ResponseWriter, r *http.Request) {
 	}
 
 	for i := 0; i < qtdPessoas ; i++ {
-
 		var pessoa = geradorPessoa()
-
-		//pessoaJ := &Pessoa{Nome: pessoa.Nome, Sobrenome: pessoa.Sobrenome, Pai: pessoa.Pai, Mae:pessoa.Mae, Cpf: pessoa.Cpf, Sexo: pessoa.Sexo, Aniversario: pessoa.Aniversario, Cep: pessoa.Cep}
-		//b, err := json.Marshal(pessoaJ)
-
-		// if err != nil {
-		// 	fmt.Println(err)
-		// 	return
-		// }
-
 		fmt.Fprintf(w, pessoa.String())
 		fmt.Fprintf(w, "\n---------------------------\n")
-	//		fmt.Fprintf(w, string(b)) // send data to client side
-	//	fmt.Fprintf(w, string("\n")) // send data to client side
 	}
 }
