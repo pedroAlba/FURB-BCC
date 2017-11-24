@@ -5,7 +5,7 @@ import (
     "fmt"
     "net/http"
 	"log"
-	"encoding/json"
+	//"encoding/json"
 	"strconv"
 )
 
@@ -31,15 +31,17 @@ func serve(w http.ResponseWriter, r *http.Request) {
 
 		var pessoa = geradorPessoa()
 
-		pessoaJ := &Pessoa{Nome: pessoa.Nome, Sobrenome: pessoa.Sobrenome, Pai: pessoa.Pai, Mae:pessoa.Mae, Cpf: pessoa.Cpf, Sexo: pessoa.Sexo, Aniversario: pessoa.Aniversario}
-		b, err := json.Marshal(pessoaJ)
+		//pessoaJ := &Pessoa{Nome: pessoa.Nome, Sobrenome: pessoa.Sobrenome, Pai: pessoa.Pai, Mae:pessoa.Mae, Cpf: pessoa.Cpf, Sexo: pessoa.Sexo, Aniversario: pessoa.Aniversario, Cep: pessoa.Cep}
+		//b, err := json.Marshal(pessoaJ)
 
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		// if err != nil {
+		// 	fmt.Println(err)
+		// 	return
+		// }
 
-		fmt.Fprintf(w, string(b)) // send data to client side
-		fmt.Fprintf(w, string("\n")) // send data to client side
+		fmt.Fprintf(w, pessoa.String())
+		fmt.Fprintf(w, "\n---------------------------\n")
+	//		fmt.Fprintf(w, string(b)) // send data to client side
+	//	fmt.Fprintf(w, string("\n")) // send data to client side
 	}
 }

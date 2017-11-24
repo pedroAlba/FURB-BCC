@@ -6,8 +6,7 @@ import (
 
 // Pessoa é o objeto principal, que receberá todas as características geradas randomicamente
 type Pessoa struct {
-	Nome, Sobrenome, Pai, Mae, Cpf, Sexo , Aniversario string	
-	Cep CEP
+	Nome, Sobrenome, Pai, Mae, Cpf, Sexo , Cep, Aniversario string		
 }
 
 func geradorPessoa() Pessoa {
@@ -20,12 +19,13 @@ func geradorPessoa() Pessoa {
 	var Pai = GeraPai(Sobrenome)
 	var Mae = GeraMae(Sobrenome, sobrenomeMaterno)
 	var Cpf = geraCPF()
+	var Cep = geraCEP()	
 	var usaSobrenomeMaterno = geraBoolRandom()
 	if usaSobrenomeMaterno {
 		Sobrenome = sobrenomeMaterno + " " + Sobrenome
 	}
 	var dataAniversario = randate();
-	return Pessoa{Nome: Nome, Sobrenome: Sobrenome, /*CEP:Cep,*/Sexo: sexoString, Cpf: Cpf, Pai: Pai, Mae: Mae, Aniversario: dataAniversario}
+	return Pessoa{Nome: Nome, Sobrenome: Sobrenome, Cep:Cep, Sexo: sexoString, Cpf: Cpf, Pai: Pai, Mae: Mae, Aniversario: dataAniversario}
 }
 
 func GeraPai(Sobrenome string) string {
@@ -51,5 +51,5 @@ func GeraMae(Sobrenome string, sobrenomeMaterno string) string {
 }
 
 func (p Pessoa) String() string {
-	return fmt.Sprintf("Nome: %s, Sobrenome: %s, Sexo: %s, CPF: %s, Pai: %s, Mãe: %s, Data: %s", p.Nome, p.Sobrenome, p.Sexo, p.Cpf, p.Pai, p.Mae, p.Aniversario)
+	return fmt.Sprintf("Nome: %s,\nSobrenome: %s,\nSexo: %s,\nCPF: %s,\nCEP: %s,\nPai: %s,\nMãe: %s,\nData: %s,\n", p.Nome, p.Sobrenome, p.Sexo, p.Cpf, p.Cep, p.Pai, p.Mae, p.Aniversario)
 }
