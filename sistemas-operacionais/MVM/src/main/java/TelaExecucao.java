@@ -310,12 +310,31 @@ public class TelaExecucao extends javax.swing.JFrame {
                 return;
             }
                 
+
+			
             try {
                 mvm.codificador(mem, shPosicao, arrayInstrucoesExecucao);
             } catch (IOException ex) {
                 Logger.getLogger(TelaExecucao.class.getName()).log(Level.SEVERE, null, ex);
             }
             bPrimeiroStep = false;
+            
+            /**
+             * A função single-step (passo-a-passo) só deve funcionar se o bit UM 0b00000010 do registrador de flags estiver ligado.
+             *  Esta opção pode ser feita através da interface com o usuário, através da instrução setbit 1;
+             */
+            
+            /**
+             * Funciona singleStep nos seguintes casos
+             * 0b00000011
+			   0b00000010
+             */
+//			if((mvm.getFlag() >> 0b00000010) != 1) {
+//				JOptionPane.showMessageDialog(this, "Single-step desabilitado.");
+//				btnRun.setEnabled(true);
+//				bPrimeiroStep = false;
+//				return;
+//			}
             
             System.out.println("RED Colour");
             try {
@@ -564,4 +583,6 @@ public class TelaExecucao extends javax.swing.JFrame {
     private javax.swing.JTextArea textAreaSaida;
     private javax.swing.JTextArea textAreaStack;
     // End of variables declaration//GEN-END:variables
+    
+    
 }
