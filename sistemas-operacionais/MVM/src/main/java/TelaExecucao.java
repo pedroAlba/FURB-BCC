@@ -309,15 +309,7 @@ public class TelaExecucao extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(this, "EndereÃ§o de carga muito elevado.");
                 return;
             }
-            
-            //Verifica se singleStep está habilitado
-            if((mvm.getFlag() >> 1) != 1) {
-            	JOptionPane.showMessageDialog(this, "Single step desativado");
-            	btnRun.setEnabled(true);
-            	bPrimeiroStep = false;
-            	return;
-            }
-            
+                
             try {
                 mvm.codificador(mem, shPosicao, arrayInstrucoesExecucao);
             } catch (IOException ex) {

@@ -3,6 +3,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
+/*
+ * To change this template, choose Tools | Templates and open the template in
+ * the editor.
+ */
 
 /**
  *
@@ -10,9 +14,10 @@ import javax.swing.JOptionPane;
  */
 public class MVM {
 
-	private final static int BIT01 = 0b00000001;
-	private final static int BIT02 = 0b00000010;
 	
+	private static final byte BIT_ZERO_LIGADO = 0b00000001;	
+	private static byte flag = BIT_ZERO_LIGADO;
+
 	private static int acessosMemoria;
     private static TelaExecucao tela;
     public static int botao = 0;
@@ -20,14 +25,10 @@ public class MVM {
     static int iPosicaoInstrucoes = 0; //para pegar do arraylist a instruçao que esta sendo executada
     static int iValorInicialPilha = -1;
 	public static boolean halt;
-	
-	//Inicializa com valor default
-	private static byte flag = BIT01;	
-	
 
     private static String converterASCII(int ax) {
         char ch = (char) ax;
-        return ch+"";
+        return Character.toString(ch);
     }
     
     public MVM(TelaExecucao telaExecucao){
@@ -43,7 +44,6 @@ public class MVM {
         ip = 0; 
         ri = 0;
         iPosicaoInstrucoes = 0;
-        flag = 0;
     }
     
     public int getAcessosMemoria() {
@@ -529,20 +529,21 @@ public class MVM {
                     sp++;
 
                     bp = mem[sp];
-                    
-                    //flags
-                    
-                    sp++;
-                    
-                    flag = (byte) mem[sp];
 
+                    
+                    //"pop flag"
+
+                    sp++;
+
+                    flag = (byte) mem[sp];
+                    
                     //"ret"
 
                     sp++;
 
                     ip = mem[sp];
 
-                    ip--;                    
+                    ip--;
                     
                     iPosicaoInstrucoes = ip;
                     acessosMemoria++;
@@ -550,48 +551,55 @@ public class MVM {
                     acessosMemoria++;
                     acessosMemoria++;
                     acessosMemoria++;
-                    acessosMemoria++;                   
+                    acessosMemoria++;
+                    acessosMemoria++;
 
                     break;
 
                 case 52://"int"
-                    tela.appendLog(ip+" - Executou int");
-                    //"push ip" 
-                    mem[sp] = (short) (ip + 2);
-                    sp--;
+                	
+                	if((flag & BIT_ZERO_LIGADO) == BIT_ZERO_LIGADO) {
+                		  tela.appendLog(ip+" - Executou int");
+                          //"push ip" 
+                          mem[sp] = (short) (ip + 2);
+                          sp--;
 
-                   //"push bp" 
-                    mem[sp] = (short) bp;
-                    sp--;
+                         //"push bp" 
+                          mem[sp] = (short) bp;
+                          sp--;
 
-                    //"push ax" 
-                    mem[sp] = (short) ax;
-                    sp--;
+                          //"push ax" 
+                          mem[sp] = (short) ax;
+                          sp--;
 
-                    //"push bx" 
-                    mem[sp] = (short) bx;
-                    sp--;
+                          //"push bx" 
+                          mem[sp] = (short) bx;
+                          sp--;
 
-                    //"push cx" 
-                    mem[sp] = (short) cx;
-                    sp--;
-                    
-                    //push flags
-                    mem[sp] = flag;
-                    sp--;
+                          //"push cx" 
+                          mem[sp] = (short) cx;
+                          sp--;
+                          
+                          //"push flag" 
+                          mem[sp] = (short) flag;
+                          sp--;
 
-                    ip = mem[aux + mem[ip + 1]];
-                    ip--;
+                          ip = mem[aux + mem[ip + 1]];
+                          ip--;
 
-                    iPosicaoInstrucoes = ip;
-                    acessosMemoria++;
-                    acessosMemoria++;
-                    acessosMemoria++;
-                    acessosMemoria++;
-                    acessosMemoria++;
-                    acessosMemoria++;
-                    acessosMemoria++;
-                    acessosMemoria++;
+                          iPosicaoInstrucoes = ip;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                          acessosMemoria++;
+                	}else {
+                		tela.appendLog(ip +" - Interrup��o ignorada, flag bit zero = 0");
+                	}
+                  
                     break;
                     
                 case 53://"sub bx,ax"
@@ -610,58 +618,63 @@ public class MVM {
                    
                     acessosMemoria++;
                     break;
-                    
-                case 55: //pushf
-                	tela.appendLog(ip+" - Executou push f");
+
+                case 55://"push f"
+                    tela.appendLog(ip+" - Executou push f");
                     mem[sp] = (short) flag;
                     sp--;
                     acessosMemoria++;
-                    
                     acessosMemoria++;
-                    break;
-                	
-                case 56: //popf
-                	tela.appendLog(ip+" - Executou popf");
+                    break;                    
+                case 56://"pop f"
+                    tela.appendLog(ip+" - Executou pop f");
                     sp++;
                     flag = (byte) mem[sp];
                     acessosMemoria++;                    
-                    acessosMemoria++;                	
-                	break;
-                	
-                case 57: {//setbit
-                	
-                	char bit = (char) mem[ip+1];
-                	
-                	switch(bit) {
-                	case '0':
-            			flag = (byte) (flag & BIT01);
-            			break;
-                	
-                	case '1':
-            			flag = (byte) (flag & BIT02);
-                		break;
-                	}
-                	
-                	break;
+                    acessosMemoria++;
+                    break;
+                    
+                case 57:{
+                	//"setbit X"
+                
+                	int valor =aux + mem[ip+1];                    
+                    tela.appendLog(ip + " - Executou setbit "+valor+".");
+                    switch (valor) {
+                    
+					case 0:
+						flag = (byte) (flag & 0b00000000);
+						break;
+						
+					case 1:
+						flag = (byte) (flag & 0b00000001);
+						break;
+					default:
+						tela.appendLog(ip + " - ERRO - setbit n�o implementado para o valor: "+valor+".");	
+					}                    
+
+                    break;                    
                 }
-                case 58://resetbit
-                {
-                	char bit = (char) mem[ip+1];
-                	
-                	switch(bit) {
-                	case '0':
-            			flag = (byte) (flag ^ BIT01);
-            			break;
-                	
-                	case '1':
-            			flag = (byte) (flag ^ BIT02);
-                		break;
-                	}
-                	
-                	break;
+                case 58: {
+                	//"resetbit X"
+                
+                	int valor =aux + mem[ip+1];                    
+                    tela.appendLog(ip + " - Executou resetbit "+valor+".");
+                    switch (valor) {
+                    
+					case 0:
+						flag = (byte) (flag ^ 0b00000000);
+						break;
+						
+					case 1:
+						flag = (byte) (flag ^ 0b00000001);
+						break;
+					default:
+						tela.appendLog(ip + " - ERRO - restbit n�o implementado para o valor: "+valor+".");	
+					}                    
+
+                    break;
                 }
-                	
-			default: {
+                default: {
                     repetir = false;
                     tela.appendLog("Saiu.");
                     System.out.println("Saiu.");
@@ -671,7 +684,8 @@ public class MVM {
                     tela.appendLog("ERRO: a memoria nao pode ser lida.");
                     System.out.println("ERRO: a memoria nao pode ser lida.");
                     repetir = false;
-                }            }
+                }
+            }
             int spAux = iValorInicialPilha;
             tela.LimpaPilha();
             if(spAux <= 0){
@@ -708,9 +722,6 @@ public class MVM {
         short iMem = shPosicao;
         int iPosConteudo = 0;
         
-        if((flag >> 0) != 1){
-        	JOptionPane.showMessageDialog(tela, "Device driver desabilitado");
-        }
         for(String sInstrucao : arrayInstrucoes) {
             if (sInstrucao.trim().equals("")) {
                 iMem++;
@@ -1116,32 +1127,31 @@ public class MVM {
                 //acessosMemoria++;
             } else if (sConteudo.matches("[0-9]+")){
                 mem[iMem++] = Short.valueOf(sConteudo);      
-            }
-            else if(sConteudo.equals("pushf")){
-                mem[iMem++] = 55;
-            }
-            else if(sConteudo.equals("popf")){
-                mem[iMem++] = 56;
-            }
-            else if(sConteudo.contains("setbit")){               
-            	mem[iMem++] = 57;
-            	iPosConteudo = 6; //tamanho da palavra "setbit"
-            	StringBuilder s = new StringBuilder();
-            	while(iPosConteudo < sConteudo.length()) {
-            		s.append(sConteudo).charAt(iPosConteudo++);
-            	}
-            	mem[iMem] = Short.parseShort(s.toString());
-            	
-            }
-            else if(sConteudo.contains("resetbit")){
-            	mem[iMem++] = 58;
-            	iPosConteudo = 8; //tamanho da palavra "resetbit"
-            	StringBuilder s = new StringBuilder();
-            	while(iPosConteudo < sConteudo.length()) {
-            		s.append(sConteudo).charAt(iPosConteudo++);
-            	}
-            	mem[iMem] = Short.parseShort(s.toString());
-            }
+	        } else if (sConteudo.equals("pushf")){
+	        	mem[iMem++] = 55;      
+	        } else if (sConteudo.equals("popf")){
+	        	mem[iMem++] = 56;      
+        	} else if (sConteudo.startsWith("setbit")){
+        		 mem[iMem++] = 57;
+                 iPosConteudo = 6;
+                 int iPosFinal = sConteudo.length();
+                 String sAux = "";
+                 while(iPosConteudo < iPosFinal){
+                     sAux += sConteudo.charAt(iPosConteudo++);
+                 }
+                 mem[iMem] = (short) (Short.parseShort(sAux) + shPosicao);
+                
+        	}else if (sConteudo.startsWith("resetbit")){
+        		mem[iMem++] = 58;   
+                iPosConteudo = 8;
+                int iPosFinal = sConteudo.length();
+                String sAux = "";
+                while(iPosConteudo < iPosFinal){
+                    sAux += sConteudo.charAt(iPosConteudo++);
+                }
+                mem[iMem] = (short) (Short.parseShort(sAux) + shPosicao);
+        	}
+            
             else{
                 JOptionPane.showMessageDialog(null, "Instrução inválida, será finalizada a ação.");
                 tela.setEdtLinhaExecucao("Instrução inválida.");
@@ -1158,9 +1168,4 @@ public class MVM {
         main.bLimiteArray = true;
         JOptionPane.showMessageDialog(null, "Limite do array atingido, será finalizada a ação.");
     }
-
-	public static byte getFlag() {
-		return flag;
-	}
-    
 }
