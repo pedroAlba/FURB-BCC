@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <script>
+
+    function doSomething(){
+
+        var c1 = document.getElementById("campo1").value;
+        var c2 = document.getElementById("campo2").value;
+        var c3 = document.getElementById("campo3").value;
+
+        let soma = parseInt(c1) + parseInt(c2) + parseInt(c3);
+
+        var text = "Soma = " + soma + "\n";
+        text+= soma % 2 == 0 ? "par" : "impar";
+        alert(text);
+    }
+
+    </script>
+    <style>
+    </style>
+
+    <form id="form" onsubmit="doSomething()">
+        <label> Campo número 1 </label>
+        <input id="campo1" type="text">
+    <br>
+        <label> Campo número 2 </label>
+        <input id="campo2" type="text">
+    <br>
+        <label> Campo número 3 </label>
+        <input id="campo3" type="text">
+    <br>
+
+    <input type="submit" value="Submit">
+
+    </form>
+
+</body>
+
+</html>
