@@ -1,6 +1,7 @@
 package trabalho01.servico;
 
 import trabalho01.Constantes;
+import trabalho01.Utils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -44,7 +45,16 @@ public class Backup {
 
             System.out.println("Servidor " + servidor.getHostName() + " pronto para receber os arquivos para fazer backup.");
 
-            //enviaPacote(servidor.getHostName(), servidor);
+            new Thread(() -> {
+                while(true){
+                    Utils.enviaPacote("Backup",servidor.getHostName(), servidor);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }).run();
 
             byte[] dados = new byte[1000];
 

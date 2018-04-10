@@ -1,6 +1,7 @@
 package trabalho01.cliente;
 
 import trabalho01.Constantes;
+import trabalho01.Utils;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +15,7 @@ import java.net.SocketException;
 import java.nio.file.Paths;
 
 public class Dispositivo {
-	
+
 	public static String readString() {
 		BufferedReader canal = new BufferedReader(new InputStreamReader(System.in));
 		try {
@@ -24,26 +25,8 @@ public class Dispositivo {
 		}		
 	}
 	
-	public static void enviaPacote(String parMensagem, InetAddress parGrupo) {
-		
-		DatagramPacket pacote;
-		DatagramSocket socket = null;		
-		
-		try {
-			pacote = new DatagramPacket(parMensagem.getBytes(), parMensagem.getBytes().length, parGrupo, Constantes.PORTA.toNumeric());
-			socket = new DatagramSocket();
-			socket.send(pacote);
-		} catch (SocketException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		} finally {
-			socket.close();
-		}
-	}
-	
+
 	public static String receberPacote() throws IOException {
-		
 		DatagramSocket socket = new DatagramSocket();
 		byte[] dados = new byte[1000];
 	 	DatagramPacket pacoteArquivos = new DatagramPacket(dados, dados.length);
@@ -65,21 +48,21 @@ public class Dispositivo {
 					FileReader fis = new FileReader(arquivo);
 					BufferedReader bufferedReader = new BufferedReader(fis);
 					String linha;
-					buffer = new StringBuilder();					
+					buffer = new StringBuilder();
 					buffer.append(arquivo.getName()).append("\n");
-					
+
 					while ((linha = bufferedReader.readLine()) != null) {
 						buffer.append(linha).append("\n");
 					}
 					fis.close();
 					bufferedReader.close();
-					
-					enviaPacote(buffer.toString(), grupo);
+
+					Utils.enviaPacote("Dispositivo", buffer.toString(), grupo);
 
                     System.out.printf("Dispositivo enviou o arquivo %s", arquivo.getName());
 				}
 			}
-			enviaPacote("ACABOU", grupo);
+			Utils.enviaPacote("Dispositivo","ACABOU", grupo);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
