@@ -1,0 +1,93 @@
+
+body {
+    background-color: #C0C2CE;
+}
+
+.ldttLogo {
+    float: left;
+}
+
+.furbLogo {
+    float: right;
+    height: 100px;
+}
+
+.menu {
+    height: 125px;
+    vertical-align: middle;
+    text-align: center;
+    padding-top: 30px;
+    font-family: 'Open Sans', sans-serif;
+}
+
+nav ul span {
+    color: #1d5377;
+    font-size: larger;
+}
+
+.pageBar {
+    height: 100px;
+    vertical-align: middle;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    text-transform: uppercase;
+    background-color: #1d5377;
+    color: #C0C2CE;
+    font-size: 50px;
+    padding: 1%;
+}
+
+.pageBar h1 {
+    padding: 25px;
+    font-weight: bold;
+}
+
+#mainImage {
+    height: 600px;
+    width: 100%;
+    background-color: #1d5377;
+    padding: 20px;
+}
+
+#mainImage h1 {
+    color: #C0C2CE;
+    font-family: 'Open Sans', sans-serif;
+    vertical-align: middle;
+}
+
+.contact {
+    padding: 20px;
+    color: #1d5377;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.contact p {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.contact form {
+    float: left;
+    display: block;
+}
+
+.contact map {
+    float: right;
+    width: 45%;
+    height: 300px;
+    color: #1d5377;
+}
+
+#mapAddress div {
+    float: right;
+    color: #1d5377;
+    position: relative;
+}
+
+input:invalid {
+    border: 2px dashed red;
+}
+
+input:valid {
+    border: 2px solid black;
+}

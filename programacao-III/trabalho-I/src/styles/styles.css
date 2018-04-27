@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+}
+
+@font-face {
+    font-family: "OpenSans Regular";
+    src: url("https://fonts.googleapis.com/css?family=Open+Sans");
+}
+
+.topnav {
+    list-style-type: none;
+    margin: 0;
+    padding: 2%;
+    overflow: hidden;
+    background-color: #D4D6D7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.topnav li {
+    float: left;
+}
+
+ul.topnav li a {
+    display: block;
+    color: black;
+    text-align: center;
+    padding: 10px 16px;
+    text-decoration: none;
+    font-family: 'Open Sans', sans-serif;
+}
+
+.topnav li a:hover:not(.active) {
+    background-color: #C0C2CE
+}
+
+.topnav li a.active {
+    background-color: #C0C2CE;
+}
+
+.topnav li.right {
+    float: right;
+}
+
+@media screen and (max-width: 600px) {
+    ul.topnav li.right,
+    ul.topnav li {
+        float: none;
+    }
+    #FURB {
+        visibility: hidden
+    }
+    #LDTT {
+        margin: 0 20%
+    }
+}
+
+.list-item {
+    float: right;
+    font-size: 15px;
+    border-right: 1px solid black;
+    padding-left: 0.3%;
+    padding-right: 0.3%;
+    vertical-align: center;
+    margin: 0px;
+}
+
+#LDTT {
+    float: left;
+    position: absolute;
+    left: 0;
+}
+
+#FURB {
+    float: right;
+    position: absolute;
+    right: 0;
+}
+
+.list-item:last-child {
+    border-right: 1px solid blue;
+}

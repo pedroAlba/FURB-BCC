@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Projetos</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" type="text/css" href="../styles/page-styles.css">
+    <link href="../styles/projetos.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(function () {
+
+            $("#header").load("header.html");
+
+            var tbProjetos = localStorage.getItem("tbProjetos");
+            tbProjetos = JSON.parse(tbProjetos);
+            if (tbProjetos == null)
+                tbProjetos = [];
+
+            for (var i in tbProjetos) {
+                var p = JSON.parse(tbProjetos[i]);
+
+                var ul = document.getElementById("mainList");
+
+                var header = document.createElement("H1");
+                header.style.fontSize = "50px";
+                header.style.color = "rgb(60, 75, 102)";
+                header.style.paddingLeft = "20%";
+                header.style.textAlign = "left";
+                header.appendChild(document.createTextNode(p.TITULO));
+                ul.appendChild(header);
+
+                var paragraph = document.createElement("P")
+                paragraph.appendChild(document.createTextNode(p.DESCRICAO));
+                ul.appendChild(paragraph);
+
+                var oImg = document.createElement("img");
+                oImg.setAttribute('src', p.IMAGEM);
+                oImg.setAttribute('height', '300px');
+                oImg.setAttribute('width', '300px');
+                ul.appendChild(oImg);
+
+                var separator = document.createElement("hr");
+                ul.appendChild(separator);
+            }
+
+            var dialog, form,
+                titulo = $("#titulo"),
+                descricao = $("#descricao"),
+                imagem = $("#imagem"),
+                allFields = $([]).add(titulo).add(descricao).add(imagem),
+                tips = $(".validateTips");
+
+            function checkLength(o, n, min, max) {
+                return true;
+            }
+
+            //Persiste a imagem em base64
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        localStorage.setItem("lastImage", e.target.result)
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            function addProjeto() {
+
+                var valid = true;
+                allFields.removeClass("ui-state-error");
+
+                var projeto = JSON.stringify({
+                    TITULO: titulo.val(),
+                    IMAGEM: localStorage.getItem("lastImage"),
+                    DESCRICAO: descricao.val()
+                });
+
+                localStorage.removeItem("lastImage");
+
+                tbProjetos.push(projeto);
+                localStorage.setItem("tbProjetos", JSON.stringify(tbProjetos));
+                console.log(localStorage.getItem("tbProjetos"));
+
+                dialog.dialog("close");
+                window.location.reload(false);
+                return valid;
+            }
+
+            dialog = $("#dialog-form").dialog({
+                autoOpen: false,
+                height: 400,
+                width: 350,
+                modal: true,
+                buttons: {
+                    "Inserir Projeto": addProjeto,
+                    Cancel: function () {
+                        dialog.dialog("close");
+                        localStorage.removeItem("lastImage")
+                    }
+                },
+                close: function () {
+                    form[0].reset();
+                    allFields.removeClass("ui-state-error");
+                }
+            });
+
+            form = dialog.find("form").on("submit", function (event) {
+                event.preventDefault();
+                addProjeto();
+            });
+
+            $("#create-item").button().on("click", function () {
+                dialog.dialog("open");
+            });
+
+            $("#clear").button().on("click", function () {
+                tbProjetos = [];
+                localStorage.setItem("tbProjetos", JSON.stringify(tbProjetos));
+                window.location.reload(false);
+            });
+
+            $("#imagem").change(function () {
+                readURL(this);
+            })
+        });
+    </script>
+</head>
+
+<body>
+    <header>
+        <div id="header">
+        </div>
+    </header>
+    <div id="dialog-form" title="Novo projeto">
+        <form>
+            <fieldset>
+                <label for="name">Titulo</label>
+                <input type="text" name="titulo" id="titulo" class="text ui-widget-content ui-corner-all" required>
+                <label for="email">Descrição</label>
+                <input type="text" name="descricao" id="descricao" class="text ui-widget-content ui-corner-all" required>
+                <label for="imagem">Imagem</label>
+                <input type="file" accept=".jpg, .jpeg, .png" name="imagem" id="imagem" class="text ui-widget-content ui-corner-all" required>
+                <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+            </fieldset>
+        </form>
+    </div>
+    <div id="Titulo">
+        <h1>Projetos</h1>
+    </div>
+    <div>
+        <ul id="mainList">
+        </ul>
+    </div>
+    <button id="clear"> Clear </button>
+    <button id="create-item">Novo Projeto</button>
+</body>
+</html>
