@@ -1,6 +1,6 @@
 import { AppPage } from './app.po';
 
-describe('locadora App', () => {
+describe('angular2-registration-login-example-cli App', () => {
   let page: AppPage;
 
   beforeEach(() => {

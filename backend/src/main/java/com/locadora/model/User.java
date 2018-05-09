@@ -18,7 +18,7 @@ public class User {
     private String name;
 
     @NotBlank
-    private String cpf;
+    private String username;
 
     @NotBlank
     private String password;
@@ -39,12 +39,12 @@ public class User {
         this.name = name;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getUsername() {
+        return username;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
