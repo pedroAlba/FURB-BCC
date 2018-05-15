@@ -1,12 +1,12 @@
-RF
+ï»¿RF
 
-- O sistema deve permitir o cadastro de usuários
-- O sistema deve permitir o login de um usuário cadastrado
+- O sistema deve permitir o cadastro de usuÃ¡rios
+- O sistema deve permitir o login de um usuÃ¡rio cadastrado
 - O sistema deve permitir gerenciar reservas
-- O sistema deve permitir gerenciar veículos
-- O sistema deve permitir a visualização dos veículos cadastrados
-- O sistema deve permitir a visualização das reservas cadastradas
+- O sistema deve permitir gerenciar veÃ­culos
+- O sistema deve permitir a visualizaÃ§Ã£o dos veÃ­culos cadastrados
+- O sistema deve permitir a visualizaÃ§Ã£o das reservas cadastradas
 
 RNF
 
-- O sistema deve contar com um controle de acesso, usuário comum e administrador
+- O sistema deve contar com um controle de acesso, usuÃ¡rio comum e administrador
