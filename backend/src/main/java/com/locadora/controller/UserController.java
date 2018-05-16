@@ -22,15 +22,15 @@ public class UserController {
         this.userRepository = userRepository;
     }
 
+    @GetMapping
+    public List<User> getAll(){
+        return userRepository.findAll();
+    }
+
     @PostMapping
     public User saveUser(@Valid @RequestBody User u){
         u.setPassword(new BCryptPasswordEncoder().encode(u.getPassword()));
         return userRepository.save(u);
-    }
-
-    @GetMapping
-    public List<User> getAll(){
-        return userRepository.findAll();
     }
 
     @PutMapping("/{id}")
