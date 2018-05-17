@@ -18,19 +18,16 @@ public class Vehicle {
     @NotBlank
     private String location;
 
-    @NotBlank
     private Integer doors;
 
     @NotBlank
     private String model;
 
-    @NotBlank
     private Integer year;
 
     @NotBlank
     private String category;
 
-    @NotBlank
     private BigDecimal rentalValue;
 
     private String characteristics;

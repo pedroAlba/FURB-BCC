@@ -4,9 +4,7 @@ import com.sun.istack.internal.NotNull;
 import org.joda.time.DateTime;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.time.DateTimeException;
 
@@ -15,9 +13,15 @@ import java.time.DateTimeException;
 @EntityListeners(AuditingEntityListener.class)
 public class Rent {
 
+    @Id
+    @NotEmpty
+    private Long id;
+
+    @OneToOne
     @NotEmpty
     private Vehicle vehicle;
 
+    @OneToOne
     @NotEmpty
     private User user;
 
@@ -26,6 +30,14 @@ public class Rent {
 
     @NotEmpty
     private DateTime endDate;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Vehicle getVehicle() {
         return vehicle;

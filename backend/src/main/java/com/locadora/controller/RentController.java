@@ -38,7 +38,7 @@ public class RentController {
     public User doRent(@RequestBody RentDTO r){
 
         Vehicle v = vehicleRepository.findById(r.getVehicleId()).orElseThrow(() -> new ResourceNotFoundException("Veículo", "id", r.getVehicleId()));
-        User u = userRepository.findById(r.getUserID()).orElseThrow(() -> new ResourceNotFoundException("Usuário", "id", r.getUserID()));
+        User u = userRepository.findById(r.getUserId()).orElseThrow(() -> new ResourceNotFoundException("Usuário", "id", r.getUserId()));
 
         if (r.getStartDate().after(r.getEndDate())){
             throw new InvalidParametersException("Data inicial não pode ser posterior a data final");

@@ -6,7 +6,7 @@ public class RentDTO {
 
     private Long vehicleId;
 
-    private Long userID;
+    private Long userId;
 
     private Date startDate;
 
@@ -20,12 +20,12 @@ public class RentDTO {
         this.vehicleId = vehicleId;
     }
 
-    public Long getUserID() {
-        return userID;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUserID(Long userID) {
-        this.userID = userID;
+    public void setUserID(Long userId) {
+        this.userId = userId;
     }
 
     public Date getStartDate() {
