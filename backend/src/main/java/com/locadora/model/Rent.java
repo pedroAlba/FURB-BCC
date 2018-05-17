@@ -1,12 +1,11 @@
 package com.locadora.model;
 
-import com.sun.istack.internal.NotNull;
-import org.joda.time.DateTime;
+import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table(name = "rent")
@@ -14,22 +13,20 @@ import java.time.DateTimeException;
 public class Rent {
 
     @Id
-    @NotEmpty
+    @GeneratedValue
     private Long id;
 
     @OneToOne
-    @NotEmpty
     private Vehicle vehicle;
 
     @OneToOne
-    @NotEmpty
     private User user;
 
-    @NotEmpty
-    private DateTime startDate;
+    @Basic
+    private LocalDate startDate;
 
-    @NotEmpty
-    private DateTime endDate;
+    @Basic
+    private LocalDate endDate;
 
     public Long getId() {
         return id;
@@ -55,19 +52,47 @@ public class Rent {
         this.user = user;
     }
 
-    public DateTime getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateTime startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public DateTime getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateTime endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Rent)) return false;
+        Rent rent = (Rent) o;
+        return Objects.equals(getId(), rent.getId()) &&
+                Objects.equals(getVehicle(), rent.getVehicle()) &&
+                Objects.equals(getUser(), rent.getUser()) &&
+                Objects.equals(getStartDate(), rent.getStartDate()) &&
+                Objects.equals(getEndDate(), rent.getEndDate());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getId(), getVehicle(), getUser(), getStartDate(), getEndDate());
+    }
+
+    @Override
+    public String toString() {
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("vehicle", vehicle)
+                .append("user", user)
+                .append("startDate", startDate)
+                .append("endDate", endDate)
+                .toString();
     }
 }

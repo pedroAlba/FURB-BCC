@@ -5,6 +5,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Table(name = "vehicles")
@@ -107,33 +108,34 @@ public class Vehicle {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
+        if (!(o instanceof Vehicle)) return false;
         Vehicle vehicle = (Vehicle) o;
-
-        if (getId() != null ? !getId().equals(vehicle.getId()) : vehicle.getId() != null) return false;
-        if (getLocation() != null ? !getLocation().equals(vehicle.getLocation()) : vehicle.getLocation() != null)
-            return false;
-        if (getDoors() != null ? !getDoors().equals(vehicle.getDoors()) : vehicle.getDoors() != null) return false;
-        if (getModel() != null ? !getModel().equals(vehicle.getModel()) : vehicle.getModel() != null) return false;
-        if (getYear() != null ? !getYear().equals(vehicle.getYear()) : vehicle.getYear() != null) return false;
-        if (getCategory() != null ? !getCategory().equals(vehicle.getCategory()) : vehicle.getCategory() != null)
-            return false;
-        if (getRentalValue() != null ? !getRentalValue().equals(vehicle.getRentalValue()) : vehicle.getRentalValue() != null)
-            return false;
-        return getCharacteristics() != null ? getCharacteristics().equals(vehicle.getCharacteristics()) : vehicle.getCharacteristics() == null;
+        return Objects.equals(getId(), vehicle.getId()) &&
+                Objects.equals(getLocation(), vehicle.getLocation()) &&
+                Objects.equals(getDoors(), vehicle.getDoors()) &&
+                Objects.equals(getModel(), vehicle.getModel()) &&
+                Objects.equals(getYear(), vehicle.getYear()) &&
+                Objects.equals(getCategory(), vehicle.getCategory()) &&
+                Objects.equals(getRentalValue(), vehicle.getRentalValue()) &&
+                Objects.equals(getCharacteristics(), vehicle.getCharacteristics());
     }
 
     @Override
     public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getLocation() != null ? getLocation().hashCode() : 0);
-        result = 31 * result + (getDoors() != null ? getDoors().hashCode() : 0);
-        result = 31 * result + (getModel() != null ? getModel().hashCode() : 0);
-        result = 31 * result + (getYear() != null ? getYear().hashCode() : 0);
-        result = 31 * result + (getCategory() != null ? getCategory().hashCode() : 0);
-        result = 31 * result + (getRentalValue() != null ? getRentalValue().hashCode() : 0);
-        result = 31 * result + (getCharacteristics() != null ? getCharacteristics().hashCode() : 0);
-        return result;
+        return Objects.hash(getId(), getLocation(), getDoors(), getModel(), getYear(), getCategory(), getRentalValue(), getCharacteristics());
+    }
+
+    @Override
+    public String toString() {
+        return new org.apache.commons.lang.builder.ToStringBuilder(this)
+                .append("id", id)
+                .append("location", location)
+                .append("doors", doors)
+                .append("model", model)
+                .append("year", year)
+                .append("category", category)
+                .append("rentalValue", rentalValue)
+                .append("characteristics", characteristics)
+                .toString();
     }
 }
