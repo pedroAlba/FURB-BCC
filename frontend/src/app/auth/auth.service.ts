@@ -4,7 +4,8 @@ import { BehaviorSubject } from "rxjs/BehaviorSubject";
 import { Observable } from 'rxjs/Rx';
 import { Http, Response } from '@angular/http';
 import { environment } from '../../environments/environment';
-import { User } from './user.interface';
+import { LoginUser } from './loginUser.interface';
+
 
 
 @Injectable()
@@ -17,7 +18,7 @@ export class AuthService {
   constructor(private router: Router,
               private http: Http) { }
 
-  signIn(user: User) {
+  signIn(user: LoginUser) {
     this.http.post(`${environment.baseUrl}/api/login`, user).subscribe(res => {
       if (eval(res.text())) {
         this.authenticated = true;

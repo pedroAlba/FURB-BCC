@@ -1,5 +1,7 @@
 package com.locadora.model;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -23,7 +25,17 @@ public class User {
     private String username;
 
     @NotBlank
+    private String email;
+
+    @NotBlank
     private String password;
+
+    @NotBlank
+    private String address;
+
+    @NotBlank
+    private String phone;
+
 
     public Long getId() {
         return id;
@@ -57,29 +69,72 @@ public class User {
         this.password = password;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
+
         if (!(o instanceof User)) return false;
+
         User user = (User) o;
-        return Objects.equals(getId(), user.getId()) &&
-                Objects.equals(getName(), user.getName()) &&
-                Objects.equals(getUsername(), user.getUsername()) &&
-                Objects.equals(getPassword(), user.getPassword());
+
+        return new EqualsBuilder()
+                .append(getId(), user.getId())
+                .append(getUsername(), user.getUsername())
+                .append(getName(), user.getName())
+                .append(getEmail(), user.getEmail())
+                .append(getPassword(), user.getPassword())
+                .append(getAddress(), user.getAddress())
+                .append(getPhone(), user.getPhone())
+                .isEquals();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getUsername(), getPassword());
+        return new HashCodeBuilder(17, 37)
+                .append(getId())
+                .append(getUsername())
+                .append(getName())
+                .append(getEmail())
+                .append(getPassword())
+                .append(getAddress())
+                .append(getPhone())
+                .toHashCode();
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
                 .append("id", id)
-                .append("name", name)
                 .append("username", username)
+                .append("name", name)
+                .append("email", email)
                 .append("password", password)
+                .append("address", address)
+                .append("phone", phone)
                 .toString();
     }
 }

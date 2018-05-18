@@ -1,3 +1,70 @@
-<p>
-  register works!
-</p>
+<h5>Register</h5>
+<div class="row">
+
+  <form materialize class="col s12" [formGroup]="form" (ngSubmit)="register()">
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="name" type="text" class="validate" formControlName="name" [class.invalid]="form.controls['name'].touched && !form.controls['name'].valid">
+        <label for="name" data-error="Nome inválido">
+          Nome
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="username" type="text" class="validate" formControlName="username" [class.invalid]="form.controls['username'].touched && !form.controls['username'].valid">
+        <label for="username" data-error="username inválido">
+          Usuário
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="email" type="email" class="validate" formControlName="email" [class.invalid]="form.controls['email'].touched && !form.controls['email'].valid">
+        <label for="email" data-error="email inválido">
+          Email
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="password" type="password" class="validate" formControlName="password" [class.invalid]="form.controls['password'].touched && !form.controls['password'].valid">
+        <label for="password" data-error="password inválido">
+          Senha
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="address" type="text" class="validate" formControlName="address" [class.invalid]="form.controls['address'].touched && !form.controls['address'].valid">
+        <label for="address" data-error="address inválido">
+          Endereço
+        </label>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="input-field col s12">
+        <input id="phone" type="text" class="validate" formControlName="phone" [class.invalid]="form.controls['phone'].touched && !form.controls['phone'].valid">
+        <label for="phone" data-error="phone inválido">
+          Telefone
+        </label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button class="btn waves-effect waves-light">
+          Registre-se
+          <i class="material-icons right">register</i>
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
