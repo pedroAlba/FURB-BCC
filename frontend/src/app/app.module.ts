@@ -1,42 +1,35 @@
-﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
-
+import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { SharedModule } from './shared/shared.module';
 import { routing } from './app.routing';
-
-import { AlertComponent } from './_directives/index';
-import { AuthGuard } from './_guards/index';
-
-import { AlertService, AuthenticationService, UserService } from './_services/index';
-import { HomeComponent } from './home/index';
-import { LoginComponent } from './login/index';
-import { RegisterComponent } from './register/index';
+import { AuthService } from './auth/auth.service';
+import { AuthGuard } from './auth/auth.guard';
+import { SigninComponent } from './signin/signin.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
-    imports: [
-        BrowserModule,
-        FormsModule,
-        HttpClientModule,
-        routing
-    ],
-    declarations: [
-        AppComponent,
-        AlertComponent,
-        HomeComponent,
-        LoginComponent,
-        RegisterComponent
-    ],
-    providers: [
-        AuthGuard,
-        AlertService,
-        AuthenticationService,
-        UserService,
-    ],
-    bootstrap: [AppComponent]
+  declarations: [
+    AppComponent,
+    SigninComponent,
+    RegisterComponent
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpModule,
+    SharedModule,
+    HttpModule,
+    routing
+  ],
+  providers: [
+    AuthGuard,
+    AuthService
+  ],
+  bootstrap: [AppComponent]
 })
-
 export class AppModule { }

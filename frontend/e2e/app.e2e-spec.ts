@@ -1,14 +1,14 @@
-import { AppPage } from './app.po';
+import { AngularCrudAuthRoutingPage } from './app.po';
 
-describe('angular2-registration-login-example-cli App', () => {
-  let page: AppPage;
+describe('angular-crud-auth-routing App', () => {
+  let page: AngularCrudAuthRoutingPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new AngularCrudAuthRoutingPage();
   });
 
-  it('should display welcome message', () => {
+  it('should display message saying app works', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+    expect(page.getParagraphText()).toEqual('app works!');
   });
 });
