@@ -20,7 +20,7 @@ public class LoginController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/")
+    @PostMapping()
     public boolean doLogin(@RequestBody User u){
         Optional<User> usuario = userRepository.findAll().stream().filter(user -> u.getUsername().equals(user.getUsername())).findFirst();
         if(usuario.isPresent()){
