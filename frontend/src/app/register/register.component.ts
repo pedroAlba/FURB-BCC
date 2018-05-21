@@ -1,39 +1,33 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Http } from '@angular/http';
-import { environment } from '../../environments/environment';
-import { Route, Router } from '@angular/router';
+﻿import { Component } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { AlertService, UserService } from '../_services/index';
 
 @Component({
-  selector: 'app-register',
-  templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+    moduleId: module.id.toString(),
+    templateUrl: 'register.component.html'
 })
-export class RegisterComponent implements OnInit {
 
-  form: FormGroup;
+export class RegisterComponent {
+    model: any = {};
+    loading = false;
 
-  constructor(
-    private fb: FormBuilder,
-    private http: Http,
-    private router: Router
-  ) { }
+    constructor(
+        private router: Router,
+        private userService: UserService,
+        private alertService: AlertService) { }
 
-  ngOnInit() {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-      username: ['', Validators.required],
-      lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', Validators.required],
-      address: ['', Validators.required],
-      phone: ['', Validators.required]
-    });
-  }
-  register() {
-    this.http.post(`${environment.baseUrl}/api/users`, this.form.value).subscribe(res => { 
-      this.form.reset();
-      this.router.navigateByUrl('/signin');
-    })
-  }
+    register() {
+        this.loading = true;
+        this.userService.create(this.model)
+            .subscribe(
+                data => {
+                    this.alertService.success('Registration successful', true);
+                    this.router.navigate(['/login']);
+                },
+                error => {
+                    this.alertService.error(error);
+                    this.loading = false;
+                });
+    }
 }

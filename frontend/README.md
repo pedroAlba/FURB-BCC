@@ -1,1 +1,1 @@
-Forked from: https://github.com/loiane/angular2-crud-auth-routing
+base project: http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial
