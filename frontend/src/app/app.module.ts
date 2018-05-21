@@ -87,6 +87,8 @@ const MAT_MODULES = [
     MatTooltipModule,
 ];
 
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
 @NgModule({
     exports: [
         MAT_MODULES,
@@ -96,7 +98,8 @@ const MAT_MODULES = [
         FormsModule,
         HttpClientModule,
         routing,
-        MAT_MODULES
+        MAT_MODULES,
+        BrowserAnimationsModule,
     ],
     declarations: [
         AppComponent,
