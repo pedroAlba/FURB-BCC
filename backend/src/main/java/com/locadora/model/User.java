@@ -24,16 +24,16 @@ public class User {
     @NotBlank
     private String username;
 
-    @NotBlank
+    
     private String email;
 
     @NotBlank
     private String password;
 
-    @NotBlank
+    
     private String address;
 
-    @NotBlank
+    
     private String phone;
 
     @OneToMany
