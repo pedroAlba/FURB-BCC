@@ -1,7 +1,8 @@
-﻿import { Component, OnInit } from '@angular/core';
+﻿import { Component, OnInit, Inject, Injectable } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
-import { AlertService, AuthenticationService } from '../_services/index';
+import { AuthenticationService, AlertService } from '../_services/index';
+import { NavbarService } from '../navbar/navbar.service';
 
 @Component({
     moduleId: module.id.toString(),
@@ -17,9 +18,13 @@ export class LoginComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
+        private nav: NavbarService,
         private alertService: AlertService) { }
 
     ngOnInit() {
+
+        this.nav.hide();
+
         // reset login status
         this.authenticationService.logout();
 
@@ -32,7 +37,14 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl]);
+                    if (data) {
+                        this.router.navigate([this.returnUrl]);
+                    } else {
+                        //TODO: Descobrir porque alertservice vem undefined
+                        this.alertService.error('Usuário ou senha inválidos');
+                        this.loading = false;
+                    }
+
                 },
                 error => {
                     this.alertService.error(error);

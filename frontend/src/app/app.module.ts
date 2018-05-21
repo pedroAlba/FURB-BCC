@@ -2,17 +2,12 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-
-// used to create fake backend
-import { fakeBackendProvider } from './_helpers/index';
-
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
 
-import { AlertComponent } from './_directives/index';
 import { AuthGuard } from './_guards/index';
 import { JwtInterceptor } from './_helpers/index';
-import { AlertService, AuthenticationService, UserService } from './_services/index';
+import { AuthenticationService, UserService, AlertService } from './_services/index';
 import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
@@ -88,9 +83,16 @@ const MAT_MODULES = [
 ];
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NavbarComponent } from './navbar/navbar.component';
+import { RentsComponent } from './rents/rents.component';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { NavbarService } from './navbar/navbar.service';
+import { AlertComponent } from './_directives';
+
 
 @NgModule({
-    exports: [
+        exports: [
         MAT_MODULES,
     ],
     imports: [
@@ -103,14 +105,17 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     ],
     declarations: [
         AppComponent,
-        AlertComponent,
         HomeComponent,
         LoginComponent,
-        RegisterComponent
+        RegisterComponent,
+        NavbarComponent,
+        RentsComponent,
+        AboutComponent,
+        ContactComponent,
+        AlertComponent
     ],
     providers: [
         AuthGuard,
-        AlertService,
         AuthenticationService,
         UserService,
         {
@@ -118,9 +123,8 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
             useClass: JwtInterceptor,
             multi: true
         },
-
-        // provider used to create fake backend
-        // fakeBackendProvider
+        NavbarService,
+        AlertService,
     ],
     bootstrap: [AppComponent]
 })

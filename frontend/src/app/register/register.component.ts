@@ -1,7 +1,7 @@
 ﻿import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { AlertService, UserService } from '../_services/index';
+import { UserService, AlertService } from '../_services/index';
 
 @Component({
     moduleId: module.id.toString(),
@@ -15,7 +15,8 @@ export class RegisterComponent {
     constructor(
         private router: Router,
         private userService: UserService,
-        private alertService: AlertService) { }
+        private alertService: AlertService
+        ) { }
 
     register() {
         this.loading = true;

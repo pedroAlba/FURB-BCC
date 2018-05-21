@@ -1,7 +1,7 @@
 ﻿import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map'
+import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -12,9 +12,9 @@ export class AuthenticationService {
         return this.http.post<any>(`${environment.baseURL}/api/login`, { username: username, password: password })
             .map(user => {
                 // login successful if there's a jwt token in the response
-                if (Boolean(user)) {
+                if (user && Boolean(user)) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    localStorage.setItem('currentUser', JSON.stringify(username));
                 }
 
                 return user;
