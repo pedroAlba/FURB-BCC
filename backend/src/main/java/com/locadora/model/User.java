@@ -7,7 +7,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -36,6 +36,8 @@ public class User {
     @NotBlank
     private String phone;
 
+    @OneToMany
+    private List<Rent> rents;
 
     public Long getId() {
         return id;
@@ -91,6 +93,14 @@ public class User {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public List<Rent> getRents() {
+        return rents;
+    }
+
+    public void setRents(List<Rent> rents) {
+        this.rents = rents;
     }
 
     @Override
