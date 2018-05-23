@@ -7,6 +7,7 @@ import { NavbarService } from '../navbar/navbar.service';
 
 @Component({
     moduleId: module.id.toString(),
+    styleUrls: ['home.component.css'],
     templateUrl: 'home.component.html'
 })
 
