@@ -4,6 +4,9 @@ import { User } from '../_models/index';
 import { UserService, AuthenticationService } from '../_services/index';
 import { MatCardContent } from '@angular/material';
 import { NavbarService } from '../navbar/navbar.service';
+import { VehicleDTO } from '../_models/vehicle';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
     moduleId: module.id.toString(),
@@ -13,14 +16,19 @@ import { NavbarService } from '../navbar/navbar.service';
 
 export class HomeComponent implements OnInit {
     currentUser: User;
-    users: User[] = [];
+    
+    vehicles: VehicleDTO[];
 
     constructor(private userService: UserService,
-                private nav: NavbarService) {
+                private nav: NavbarService,
+                private http: HttpClient) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
     ngOnInit() {
         this.nav.show();
+        this.http.get<VehicleDTO[]>(`${environment.baseURL}/api/vehicles`).subscribe(response => {
+            this.vehicles = response;
+        })
     }  
 }

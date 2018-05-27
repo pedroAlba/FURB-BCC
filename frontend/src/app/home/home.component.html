@@ -1,2 +1,26 @@
-<p style="padding-top: 100px; text-align: center"> home component</p>
 
+
+  <div id="card-container" style="margin-top: 10%" >  
+  <mat-card *ngFor="let vehicle of vehicles">
+    <!-- <mat-card-title-group>
+      <img mat-card-sm-image src="https://image.freepik.com/free-photo/blue-surface-with-creases_1160-191.jpg">
+      <mat-card-title>{{car}}</mat-card-title>
+      <mat-card-subtitle>Is the first order in numeric</mat-card-subtitle>
+    </mat-card-title-group> -->
+    <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{vehicle.model}}</mat-card-title>
+        <mat-card-subtitle>{{vehicle.year}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src="https://source.unsplash.com/1600x900/?vehicle" alt="Photo of a Shiba Inu">
+      <mat-card-content>
+        <p>
+          R$ {{vehicle.rentalValue}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Detalhes</button>        
+      </mat-card-actions>
+  </mat-card>
+  </div>
+  

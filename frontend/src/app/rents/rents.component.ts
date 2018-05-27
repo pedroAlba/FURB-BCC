@@ -10,6 +10,7 @@ import {map} from 'rxjs/operators/map';
 import {startWith} from 'rxjs/operators/startWith';
 import {switchMap} from 'rxjs/operators/switchMap';
 import { environment } from '../../environments/environment';
+import { VehicleDTO } from '../_models/vehicle';
 
 @Component({
   selector: 'app-rents',
@@ -72,13 +73,7 @@ export interface GithubApi {
   items: VehicleDTO[];
 }
 
-export interface VehicleDTO {
-  id: string;
-  location: string;
-  model: string;
-  rentalValue: string;
-  category: string;
-}
+
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDao {
