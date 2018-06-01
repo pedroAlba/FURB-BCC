@@ -90,6 +90,8 @@ import { ContactComponent } from './contact/contact.component';
 import { AdminComponent } from './admin/admin.component';
 import { AlertComponent } from './_directives';
 import { NavbarService } from './navbar/navbar.service';
+import { CrudDatatableComponent } from './datatable/crud-datatable.component';
+import { DataService } from './_services/data.service';
 
 
 @NgModule({
@@ -114,7 +116,8 @@ import { NavbarService } from './navbar/navbar.service';
         AboutComponent,
         ContactComponent,
         AlertComponent,
-        AdminComponent
+        AdminComponent,
+        CrudDatatableComponent
     ],
     providers: [
         AuthGuard,
@@ -127,6 +130,7 @@ import { NavbarService } from './navbar/navbar.service';
         },
         NavbarService,
         AlertService,
+        DataService
     ],
     bootstrap: [AppComponent]
 })
