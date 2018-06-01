@@ -87,8 +87,9 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RentsComponent } from './rents/rents.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
-import { NavbarService } from './navbar/navbar.service';
+import { AdminComponent } from './admin/admin.component';
 import { AlertComponent } from './_directives';
+import { NavbarService } from './navbar/navbar.service';
 
 
 @NgModule({
@@ -112,7 +113,8 @@ import { AlertComponent } from './_directives';
         RentsComponent,
         AboutComponent,
         ContactComponent,
-        AlertComponent
+        AlertComponent,
+        AdminComponent
     ],
     providers: [
         AuthGuard,
