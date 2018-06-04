@@ -1,8 +1,30 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>br.com</groupId>
-  <artifactId>sd</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>br.com</groupId>
+    <artifactId>sd</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.river</groupId>
+            <artifactId>start</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.river/reggie -->
+        <dependency>
+            <groupId>org.apache.river</groupId>
+            <artifactId>reggie</artifactId>
+            <version>2.2.3</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.jini.maven-jini-plugin/maven-jini-plugin -->
+        <dependency>
+            <groupId>org.jini.maven-jini-plugin</groupId>
+            <artifactId>maven-jini-plugin</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+    </dependencies>
     <build>
         <plugins>
             <plugin>
