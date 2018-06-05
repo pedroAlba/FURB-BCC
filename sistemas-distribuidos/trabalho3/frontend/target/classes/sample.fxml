@@ -9,11 +9,11 @@
    <children>
       <Pane prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Button fx:id="btDdquire" layoutX="274.0" layoutY="154.0" mnemonicParsing="false" onAction="#adquire" text="Adquire" />
-            <Button fx:id="btRenova" layoutX="274.0" layoutY="200.0" mnemonicParsing="false" onAction="#renova" text="Renova" />
-            <Button fx:id="btDevolve" layoutX="274.0" layoutY="245.0" mnemonicParsing="false" onAction="#devolve" text="Devolve" />
-            <Label fx:id="lblInfo" layoutX="286.0" layoutY="80.0" text="Label" />
-            <Label fx:id="lblTempoRestante" layoutX="386.0" layoutY="110.0" text="Label" />
+            <Button fx:id="btnAdquire" layoutX="130.0" layoutY="124.0" mnemonicParsing="false" onAction="#adquire" text="Adquire" />
+            <Button fx:id="btRenova" layoutX="130.0" layoutY="170.0" mnemonicParsing="false" onAction="#renova" text="Renova" />
+            <Button fx:id="btDevolve" layoutX="130.0" layoutY="215.0" mnemonicParsing="false" onAction="#devolve" text="Devolve" />
+            <Label fx:id="lblInfo" layoutX="130.0" layoutY="50.0" text="Info lic" />
+            <Label fx:id="lblTempoRestante" layoutX="130.0" layoutY="80.0" text="0" />
          </children>
       </Pane>
    </children>
