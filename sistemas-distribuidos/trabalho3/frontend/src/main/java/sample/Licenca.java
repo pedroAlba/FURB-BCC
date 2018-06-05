@@ -1,12 +1,11 @@
-package com.sd.trab3;
+package sample;
 
 import java.time.Instant;
 
 public class Licenca {
-
     private int id;
     private boolean inUse;
-    private Instant obtido;
+    private String obtido;
 
     public Licenca(int i) {
         this.id = i;
@@ -20,7 +19,7 @@ public class Licenca {
         return inUse;
     }
 
-    public Instant getObtido() {
+    public String getObtido() {
         return obtido;
     }
 
@@ -28,7 +27,7 @@ public class Licenca {
         this.inUse = inUse;
     }
 
-    public void setObtido(Instant obtido) {
+    public void setObtido(String obtido) {
         this.obtido = obtido;
     }
 
