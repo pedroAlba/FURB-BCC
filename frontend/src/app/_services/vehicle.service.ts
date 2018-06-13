@@ -18,4 +18,7 @@ export class VehicleService {
     return this.http.get<VehicleDTO[]>(`${environment.baseURL}/api/vehicles`);
   }
 
+  deleteVehicle(id: string) {
+    return this.http.delete(`${environment.baseURL}/api/vehicles/` + id, {responseType: 'text'});
+  }
 }

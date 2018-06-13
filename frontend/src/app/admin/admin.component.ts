@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { VehicleDTO } from '../_models/vehicle';
 import { VehicleService } from '../_services/vehicle.service';
@@ -17,10 +17,10 @@ import { Observable } from 'rxjs/Observable';
 export class AdminComponent implements OnInit {
 
   vehicle: VehicleDTO;
-  displayedColumns = ['location', 'model', 'rentalValue', 'category'];
+  displayedColumns = ['id', 'location', 'doors', 'model', 'year', 'category', 'rentalValue', 'actions'];
 
   exampleDatabase: VehicleService | null;
-  data: GithubApi[] = [];
+  data: VehicleDTO[] = [];
 
   resultsLength = 0;
   isLoadingResults = true;
@@ -39,8 +39,6 @@ export class AdminComponent implements OnInit {
 }
 
   ngOnInit() {
-
-        // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
@@ -52,7 +50,6 @@ export class AdminComponent implements OnInit {
             this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
-          // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.length;
@@ -60,11 +57,23 @@ export class AdminComponent implements OnInit {
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
           this.isRateLimitReached = true;
           return Observable.of([]);
         })
       ).subscribe(data => this.dataSource.data = data);
+  }
+
+  edit(row) {
+    console.log(row);
+  }
+
+  delete(row) {
+    this.vehicleService.deleteVehicle(row.id).subscribe(() => {
+      this.snackBar.open('Veículo deletado com sucesso!', '', {
+        duration: 2000,
+      });
+      this.refreshTable();
+    });
   }
 
   openDialog(): void {
@@ -89,9 +98,16 @@ export class AdminComponent implements OnInit {
           this.snackBar.open('Veículo cadastrado com sucesso!', '', {
             duration: 2000,
           });
+          // Recarrega e lista o novo veiculo
+          this.refreshTable();
+          this.vehicle = new VehicleDTO();
         });
       }
     });
+  }
+
+  refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 }
 
@@ -110,8 +126,4 @@ export class DialogOverviewExampleDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
-}
-
-export interface GithubApi {
-  items: VehicleDTO[];
 }

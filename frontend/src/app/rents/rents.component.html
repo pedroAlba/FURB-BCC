@@ -13,21 +13,26 @@
             <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
         </ng-container>
 
+        <!-- Title Column -->
         <ng-container matColumnDef="location">
             <mat-header-cell *matHeaderCellDef>Localizacao</mat-header-cell>
             <mat-cell *matCellDef="let row">{{ row.location }}</mat-cell>
         </ng-container>
 
+        <!-- State Column -->
         <ng-container matColumnDef="model">
             <mat-header-cell *matHeaderCellDef>Modelo</mat-header-cell>
             <mat-cell *matCellDef="let row">{{ row.model }}</mat-cell>
         </ng-container>
 
+        <!-- State Column -->
         <ng-container matColumnDef="rentalValue">
             <mat-header-cell *matHeaderCellDef>Valor</mat-header-cell>
             <mat-cell *matCellDef="let row">{{ row.rentalValue }}</mat-cell>
         </ng-container>
 
+        
+        <!-- State Column -->
         <ng-container matColumnDef="category">
             <mat-header-cell *matHeaderCellDef>Categoria</mat-header-cell>
             <mat-cell *matCellDef="let row">{{ row.category }}</mat-cell>
