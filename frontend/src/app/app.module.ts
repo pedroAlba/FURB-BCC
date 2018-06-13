@@ -92,6 +92,7 @@ import { NavbarService } from './navbar/navbar.service';
 import { DataService } from './_services/data.service';
 import { AdminComponent, DialogOverviewExampleDialog } from './admin/admin.component';
 import { VehicleService } from './_services/vehicle.service';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 @NgModule({
@@ -105,6 +106,7 @@ import { VehicleService } from './_services/vehicle.service';
         routing,
         MAT_MODULES,
         BrowserAnimationsModule,
+        FlexLayoutModule
     ],
     declarations: [
         AppComponent,

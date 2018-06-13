@@ -1,17 +1,31 @@
 <mat-toolbar color="primary" *ngIf="nav.visible">
 
     <button mat-button routerLink="/">
-    <mat-icon></mat-icon> 
-        {{title}}</button>
+        <mat-icon>home</mat-icon> 
+            {{title}}</button>
+    
 
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
     <div fxLayout="row" fxShow="false" fxShow.gt-sm>
         <button mat-button routerLink="">Veículos</button>
-        <button mat-button routerLink="rents">Reservas</button>
+        <button mat-button routerLink="rents" onclick="teste">Reservas</button>
         <button mat-button routerLink="about">Quem Somos</button>
         <button mat-button routerLink="contact">Contato</button>
         <button mat-button routerLink="admin">Administração</button>
         <button mat-button routerLink="login">Sair</button>
     </div>
+
+    <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
+        <mat-icon>menu</mat-icon>
+       </button>
+
 </mat-toolbar>
+
+<mat-menu x-position="before" #menu="matMenu">
+    <button mat-menu-item routerLink="rents">Reservas</button>
+    <button mat-menu-item routerLink="about">Quem Somos</button>
+    <button mat-menu-item routerLink="contact">Contato</button>
+    <button mat-menu-item routerLink="admin">Administração</button>
+    <button mat-menu-item routerLink="login">Sair</button>
+</mat-menu>
