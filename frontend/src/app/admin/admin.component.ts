@@ -23,22 +23,28 @@ export class AdminComponent implements OnInit {
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '250px',
+      width: '500px',
+      height: '370px',
       data: { location: this.vehicle.location,
+              doors: this.vehicle.doors,
               model: this.vehicle.model,
+              year: this.vehicle.year,
+              category: this.vehicle.category,
               rentalValue: this.vehicle.rentalValue,
-              category: this.vehicle.category}
+              characteristics: this.vehicle.characteristics}
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
-      this.vehicle = result;
-      this.vehicleService.create(this.vehicle).subscribe(response => {
-        this.snackBar.open('Veículo cadastrado com sucesso!', '', {
-          duration: 2000,
+      if (result) {
+        this.vehicle = result;
+        this.vehicleService.create(this.vehicle).subscribe(response => {
+          this.snackBar.open('Veículo cadastrado com sucesso!', '', {
+            duration: 2000,
+          });
         });
-      });
+      }
     });
   }
 }
@@ -46,6 +52,7 @@ export class AdminComponent implements OnInit {
 @Component({
   selector: 'app-dialog-overview-example-dialog',
   templateUrl: 'add-vehicle-dialog.html',
+  styleUrls: ['./add-vehicle-dialog.component.css']
 })
 export class DialogOverviewExampleDialog {
 

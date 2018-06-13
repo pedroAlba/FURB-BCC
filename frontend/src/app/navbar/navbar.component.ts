@@ -7,7 +7,8 @@ import { User } from '../_models';
 @Component({
   moduleId: module.id,
   selector: 'app-navbar',
-  templateUrl: 'navbar.component.html'
+  templateUrl: 'navbar.component.html',
+  styleUrls: ['navbar.component.css']
 })
 
 export class NavbarComponent implements AfterViewInit, OnDestroy{

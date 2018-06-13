@@ -1,7 +1,10 @@
 export class VehicleDTO {
     id: string;
     location: string;
+    doors: string;
     model: string;
-    rentalValue: string;
+    year: string;
     category: string;
-  }
+    rentalValue: string;
+    characteristics: string;
+}

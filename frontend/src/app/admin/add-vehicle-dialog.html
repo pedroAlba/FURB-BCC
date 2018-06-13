@@ -1,18 +1,34 @@
 <div mat-dialog-content>
   <p>Veiculo</p>
+
   <mat-form-field>
     <input matInput [(ngModel)]="data.location" placeholder="Localização">
   </mat-form-field>
 
   <mat-form-field>
+    <input matInput [(ngModel)]="data.doors" placeholder="Portas">
+  </mat-form-field>
+
+  <mat-form-field>
     <input matInput [(ngModel)]="data.model" placeholder="Modelo">
   </mat-form-field>
+
   <mat-form-field>
-    <input matInput [(ngModel)]="data.rentalValue" placeholder="Valor">
+    <input matInput [(ngModel)]="data.year" placeholder="Ano">
   </mat-form-field>
+
   <mat-form-field>
     <input matInput [(ngModel)]="data.category" placeholder="Categoria">
   </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.rentalValue" placeholder="Valor">
+  </mat-form-field>
+
+ <mat-form-field class="example-full-width">
+    <textarea matInput [(ngModel)]="data.characteristics" placeholder="Caracteristicas"></textarea>
+  </mat-form-field>
+
 </div>
 <div mat-dialog-actions> 
   <button mat-button (click)="onNoClick()">Cancelar</button>
