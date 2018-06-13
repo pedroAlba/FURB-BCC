@@ -19,7 +19,7 @@ import { VehicleDTO } from '../_models/vehicle';
 })
 export class RentsComponent implements OnInit {
 
-  displayedColumns = ['location', 'model', 'rentalValue', 'category'];
+  displayedColumns = ['location', 'model', 'rentalValue', 'category', 'actions'];
 
   exampleDatabase: ExampleHttpDao | null;
   data: GithubApi[] = [];
@@ -53,7 +53,6 @@ export class RentsComponent implements OnInit {
             this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
-          // Flip flag to show that loading has finished.
           this.isLoadingResults = false;
           this.isRateLimitReached = false;
           this.resultsLength = data.length;
@@ -61,12 +60,16 @@ export class RentsComponent implements OnInit {
         }),
         catchError(() => {
           this.isLoadingResults = false;
-          // Catch if the GitHub API has reached its rate limit. Return empty data.
           this.isRateLimitReached = true;
           return observableOf([]);
         })
       ).subscribe(data => this.dataSource.data = data);
-  }}
+  }
+
+  rent(row) {
+    console.log(row);
+  }
+}
 
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDao {

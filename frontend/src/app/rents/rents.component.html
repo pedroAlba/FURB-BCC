@@ -1,3 +1,10 @@
+<mat-card style="margin:2em;">
+
+    
+      <mat-card-title>
+        Reservas
+      </mat-card-title>
+
 <div class="example-container mat-elevation-z8" style="margin-top: 100px">
     <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -38,6 +45,16 @@
             <mat-cell *matCellDef="let row">{{ row.category }}</mat-cell>
         </ng-container>
 
+         <!-- actions -->
+      <ng-container matColumnDef="actions">
+            <mat-header-cell *matHeaderCellDef></mat-header-cell>
+            <mat-cell *matCellDef="let row; let i=id;">
+              <button mat-icon-button (click)="rent(row)">
+                <mat-icon aria-label="Reservar">check</mat-icon>
+              </button>
+            </mat-cell>
+        </ng-container>
+
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
@@ -45,3 +62,4 @@
     <mat-paginator [length]="resultsLength" [pageSize]="30">
     </mat-paginator>
 </div>
+</mat-card>
