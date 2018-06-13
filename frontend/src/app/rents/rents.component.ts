@@ -95,7 +95,7 @@ export class RentsComponent implements OnInit {
       if(r){
         console.log(r);
         let rent = new RentDTO();
-        rent.date = r.toLocaleString();
+        rent.date = r.toLocaleDateString();
         rent.userName = JSON.parse(localStorage.getItem('currentUser'));
         rent.vehicleId = row.id + '';
         console.log("rent before post");
