@@ -1,0 +1,20 @@
+<div mat-dialog-content>
+  <p>Veiculo</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.location" placeholder="Localização">
+  </mat-form-field>
+
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.model" placeholder="Modelo">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.rentalValue" placeholder="Valor">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.category" placeholder="Categoria">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions> 
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Cadastrar</button>
+</div>

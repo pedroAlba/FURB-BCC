@@ -87,11 +87,11 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { RentsComponent } from './rents/rents.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
-import { AdminComponent } from './admin/admin.component';
 import { AlertComponent } from './_directives';
 import { NavbarService } from './navbar/navbar.service';
-import { CrudDatatableComponent } from './datatable/crud-datatable.component';
 import { DataService } from './_services/data.service';
+import { AdminComponent, DialogOverviewExampleDialog } from './admin/admin.component';
+import { VehicleService } from './_services/vehicle.service';
 
 
 @NgModule({
@@ -117,12 +117,13 @@ import { DataService } from './_services/data.service';
         ContactComponent,
         AlertComponent,
         AdminComponent,
-        CrudDatatableComponent
+        DialogOverviewExampleDialog
     ],
     providers: [
         AuthGuard,
         AuthenticationService,
         UserService,
+        VehicleService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
@@ -132,7 +133,8 @@ import { DataService } from './_services/data.service';
         AlertService,
         DataService
     ],
-    bootstrap: [AppComponent]
+    entryComponents: [DialogOverviewExampleDialog],
+    bootstrap: [AppComponent],
 })
 
 export class AppModule { }

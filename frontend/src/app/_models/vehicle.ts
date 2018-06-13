@@ -1,4 +1,4 @@
-export interface VehicleDTO {
+export class VehicleDTO {
     id: string;
     location: string;
     model: string;
