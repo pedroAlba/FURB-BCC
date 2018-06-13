@@ -49,7 +49,7 @@ export class RentsComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase!.getVehicles(
+          return this.exampleDatabase.getVehicles(
             this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
@@ -68,13 +68,6 @@ export class RentsComponent implements OnInit {
       ).subscribe(data => this.dataSource.data = data);
   }}
 
-
-export interface GithubApi {
-  items: VehicleDTO[];
-}
-
-
-
 /** An example database that the data source uses to retrieve data for the table. */
 export class ExampleHttpDao {
   constructor(private http: HttpClient) {}
@@ -82,4 +75,8 @@ export class ExampleHttpDao {
   getVehicles(sort: string, order: string, page: number): Observable<VehicleDTO[]> {
     return this.http.get<VehicleDTO[]>(`${environment.baseURL}/api/vehicles`);
   }
+}
+
+export interface GithubApi {
+  items: VehicleDTO[];
 }

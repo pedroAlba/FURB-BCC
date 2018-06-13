@@ -1,7 +1,13 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { VehicleDTO } from '../_models/vehicle';
 import { VehicleService } from '../_services/vehicle.service';
+import { merge } from 'rxjs/observable/merge';
+import { startWith } from 'rxjs/operators/startWith';
+import { switchMap } from 'rxjs/operators/switchMap';
+import { map } from 'rxjs/operators/map';
+import { catchError } from 'rxjs/operators/catchError';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-admin',
@@ -11,14 +17,54 @@ import { VehicleService } from '../_services/vehicle.service';
 export class AdminComponent implements OnInit {
 
   vehicle: VehicleDTO;
+  displayedColumns = ['location', 'model', 'rentalValue', 'category'];
 
-  ngOnInit() {
-  }
+  exampleDatabase: VehicleService | null;
+  data: GithubApi[] = [];
+
+  resultsLength = 0;
+  isLoadingResults = true;
+  isRateLimitReached = false;
+
+  dataSource = new MatTableDataSource();
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
 
   constructor(public dialog: MatDialog,
-              private snackBar: MatSnackBar,
-              private vehicleService: VehicleService) {
+    private snackBar: MatSnackBar,
+    private vehicleService: VehicleService) {
     this.vehicle = new VehicleDTO();
+}
+
+  ngOnInit() {
+
+        // If the user changes the sort order, reset back to the first page.
+    this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
+
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(
+        startWith({}),
+        switchMap(() => {
+          this.isLoadingResults = true;
+          return this.vehicleService.getVehicles(
+            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+        }),
+        map(data => {
+          // Flip flag to show that loading has finished.
+          this.isLoadingResults = false;
+          this.isRateLimitReached = false;
+          this.resultsLength = data.length;
+          return data;
+        }),
+        catchError(() => {
+          this.isLoadingResults = false;
+          // Catch if the GitHub API has reached its rate limit. Return empty data.
+          this.isRateLimitReached = true;
+          return Observable.of([]);
+        })
+      ).subscribe(data => this.dataSource.data = data);
   }
 
   openDialog(): void {
@@ -49,6 +95,7 @@ export class AdminComponent implements OnInit {
   }
 }
 
+
 @Component({
   selector: 'app-dialog-overview-example-dialog',
   templateUrl: 'add-vehicle-dialog.html',
@@ -65,3 +112,6 @@ export class DialogOverviewExampleDialog {
   }
 }
 
+export interface GithubApi {
+  items: VehicleDTO[];
+}
