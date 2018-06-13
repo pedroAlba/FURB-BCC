@@ -64,7 +64,33 @@ export class AdminComponent implements OnInit {
   }
 
   edit(row) {
-    console.log(row);
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '500px',
+      height: '370px',
+      data: { location: row.location + '',
+              doors: row.doors + '',
+              model: row.model + '',
+              year: row.year + '',
+              category: row.category + '',
+              rentalValue: row.rentalValue + '',
+              characteristics: row.characteristics + ''}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        alert(result);
+        this.vehicleService.updateVehicle(row.id, result).subscribe(response => {
+          this.snackBar.open('Veículo atualizado com sucesso!', '', {
+            duration: 2000,
+          });
+          // Recarrega e lista o novo veiculo
+          this.refreshTable();
+          this.vehicle = new VehicleDTO();
+        }, err => {
+          console.log(err);
+        });
+      }
+    });
   }
 
   delete(row) {

@@ -7,18 +7,24 @@ import { Observable } from 'rxjs/Observable';
 @Injectable()
 export class VehicleService {
 
+
   constructor(private http: HttpClient) { }
 
+  baseAPI = `${environment.baseURL}/api/vehicles`;
 
   create(vehicle: VehicleDTO) {
-    return this.http.post(`${environment.baseURL}/api/vehicles/`, vehicle);
+    return this.http.post(this.baseAPI, vehicle);
   }
 
   getVehicles(sort: string, order: string, page: number): Observable<VehicleDTO[]> {
-    return this.http.get<VehicleDTO[]>(`${environment.baseURL}/api/vehicles`);
+    return this.http.get<VehicleDTO[]>(this.baseAPI);
   }
 
   deleteVehicle(id: string) {
-    return this.http.delete(`${environment.baseURL}/api/vehicles/` + id, {responseType: 'text'});
+    return this.http.delete(this.baseAPI + '/' + id, {responseType: 'text'});
+  }
+
+  updateVehicle(id: string, vehicle: VehicleDTO){
+    return this.http.put(this.baseAPI + '/' + id, vehicle);
   }
 }

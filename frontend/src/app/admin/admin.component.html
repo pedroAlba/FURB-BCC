@@ -49,11 +49,11 @@
      <ng-container matColumnDef="actions">   
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let row; let i=id;">
-        <button mat-icon-button color="accent" (click)="edit(row)">
+        <button mat-icon-button (click)="edit(row)">
           <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
 
-        <button mat-icon-button color="accent" (click)="delete(row)">
+        <button mat-icon-button  (click)="delete(row)">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
