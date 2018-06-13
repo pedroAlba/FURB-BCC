@@ -77,8 +77,7 @@ export class AdminComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        alert(result);
+      if (result) {        
         this.vehicleService.updateVehicle(row.id, result).subscribe(response => {
           this.snackBar.open('Veículo atualizado com sucesso!', '', {
             duration: 2000,
@@ -116,8 +115,6 @@ export class AdminComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
       if (result) {
         this.vehicle = result;
         this.vehicleService.create(this.vehicle).subscribe(response => {
