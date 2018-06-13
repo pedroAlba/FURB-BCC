@@ -1,10 +1,8 @@
 <mat-card style="margin:2em;">
 
-    
-      <mat-card-title>
-        Reservas
-      </mat-card-title>
-
+    <mat-card-title>
+        Veículos Disponíveis
+    </mat-card-title>
 <div class="example-container mat-elevation-z8" style="margin-top: 100px">
     <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
         <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
@@ -49,8 +47,8 @@
       <ng-container matColumnDef="actions">
             <mat-header-cell *matHeaderCellDef></mat-header-cell>
             <mat-cell *matCellDef="let row; let i=id;">
-              <button mat-icon-button (click)="rent(row)">
-                <mat-icon aria-label="Reservar">check</mat-icon>
+              <button mat-icon-button (click)="doRent(row)">
+                <mat-icon svgIcon="rent"></mat-icon>
               </button>
             </mat-cell>
         </ng-container>

@@ -84,7 +84,7 @@ const MAT_MODULES = [
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-import { RentsComponent } from './rents/rents.component';
+import { RentsComponent, RentDialog } from './rents/rents.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { AlertComponent } from './_directives';
@@ -93,6 +93,7 @@ import { DataService } from './_services/data.service';
 import { AdminComponent, DialogOverviewExampleDialog } from './admin/admin.component';
 import { VehicleService } from './_services/vehicle.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { RentService } from './_services/rent.service';
 
 
 @NgModule({
@@ -119,13 +120,15 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         ContactComponent,
         AlertComponent,
         AdminComponent,
-        DialogOverviewExampleDialog
+        DialogOverviewExampleDialog,
+        RentDialog
     ],
     providers: [
         AuthGuard,
         AuthenticationService,
         UserService,
         VehicleService,
+        RentService,
         {
             provide: HTTP_INTERCEPTORS,
             useClass: JwtInterceptor,
@@ -135,7 +138,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
         AlertService,
         DataService
     ],
-    entryComponents: [DialogOverviewExampleDialog],
+    entryComponents: [DialogOverviewExampleDialog, RentDialog],
     bootstrap: [AppComponent],
 })
 

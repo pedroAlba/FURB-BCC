@@ -1,0 +1,14 @@
+<div mat-dialog-content>
+  <p>Reserva</p>
+
+  <mat-form-field>
+    <input matInput [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="data">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+</div>
+<div mat-dialog-actions> 
+  <button mat-button (click)="onNoClick()">Cancelar</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Reservar</button>
+</div>

@@ -4,6 +4,8 @@
         <mat-icon>home</mat-icon> 
             {{title}}</button>
     
+                <mat-icon>person</mat-icon> 
+                     {{currentUser}}
 
     <!-- This fills the remaining space of the current row -->
     <span class="fill-remaining-space"></span>
@@ -15,6 +17,8 @@
         <button mat-button routerLink="admin">Administração</button>
         <button mat-button routerLink="login">Sair</button>
     </div>
+
+   
 
     <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>

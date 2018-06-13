@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import { environment } from '../../environments/environment';
+import { User } from '../_models';
 
 @Injectable()
 export class AuthenticationService {
@@ -24,5 +25,9 @@ export class AuthenticationService {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+    }
+
+    getCurrentUser() : User {
+        return <User> JSON.parse(localStorage.getItem('currentUser'));
     }
 }

@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @CrossOrigin(origins="**")
 @RestController
@@ -43,27 +45,12 @@ public class RentController {
     public Rent doRent(@RequestBody RentDTO r) {
 
         Vehicle v = vehicleRepository.findById(r.getVehicleId()).orElseThrow(() -> new ResourceNotFoundException("Veículo", "id", r.getVehicleId()));
-        User u = userRepository.findById(r.getUserId()).orElseThrow(() -> new ResourceNotFoundException("Usuário", "id", r.getUserId()));
-
-        if (r.getStartDate().isAfter(r.getEndDate())){
-            throw new InvalidParametersException("Data inicial não pode ser posterior a data final");
-        }
-
-        Optional<Rent> duplicateRent = rentRepository.findAll().stream().filter(re -> re.getVehicle().getId().equals(r.getVehicleId()))
-                                                      .filter(re -> re.getStartDate().equals(r.getStartDate())
-                                                                    &&
-                                                                    re.getEndDate().equals(r.getEndDate()))
-                                                      .findAny();
-
-        duplicateRent.ifPresent(s -> {
-            throw new InvalidParametersException("Veículo já está alugado nessa data" + s.toString());
-        });
+        User u = userRepository.findAll().stream().filter(user -> user.getUsername().equals(r.getUserName())).findAny().orElseThrow(() -> new ResourceNotFoundException("Usuário", "id", r.getUserName()));
 
         Rent rent = new Rent();
         rent.setUser(u);
         rent.setVehicle(v);
-        rent.setStartDate(r.getStartDate());
-        rent.setEndDate(r.getEndDate());
+        rent.setDate(r.getDate());
 
         return rentRepository.save(rent);
     }
@@ -74,4 +61,11 @@ public class RentController {
         rentRepository.delete(persistedRent);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/days/{id}")
+    public List<LocalDate> getUnavailableDays(@PathVariable(value = "id") Long vehicleId){
+        List<Rent> vehicleRents = rentRepository.findAll().stream().filter(r -> r.getVehicle().getId().equals(vehicleId)).collect(Collectors.toList());
+        return vehicleRents.stream().map(Rent::getDate).collect(Collectors.toList());
+    }
+
 }

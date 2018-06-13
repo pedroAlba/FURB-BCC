@@ -1,3 +1,4 @@
+
 package com.locadora.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -7,13 +8,10 @@ public class RentDTO {
 
     private Long vehicleId;
 
-    private Long userId;
+    private String userName;
 
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate startDate;
-
-    @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate endDate;
+    @JsonFormat(pattern = "dd/MM/yyyy")
+    private LocalDate date;
 
     public Long getVehicleId() {
         return vehicleId;
@@ -23,27 +21,20 @@ public class RentDTO {
         this.vehicleId = vehicleId;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserID(Long userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 }

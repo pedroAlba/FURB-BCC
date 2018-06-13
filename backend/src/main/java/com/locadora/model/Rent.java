@@ -23,10 +23,8 @@ public class Rent {
     private User user;
 
     @Basic
-    private LocalDate startDate;
+    private LocalDate date;
 
-    @Basic
-    private LocalDate endDate;
 
     public Long getId() {
         return id;
@@ -52,20 +50,12 @@ public class Rent {
         this.user = user;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     @Override
@@ -75,14 +65,12 @@ public class Rent {
         Rent rent = (Rent) o;
         return Objects.equals(getId(), rent.getId()) &&
                 Objects.equals(getVehicle(), rent.getVehicle()) &&
-                Objects.equals(getUser(), rent.getUser()) &&
-                Objects.equals(getStartDate(), rent.getStartDate()) &&
-                Objects.equals(getEndDate(), rent.getEndDate());
+                Objects.equals(getUser(), rent.getUser());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getVehicle(), getUser(), getStartDate(), getEndDate());
+        return Objects.hash(getId(), getVehicle(), getUser());
     }
 
     @Override
@@ -91,8 +79,7 @@ public class Rent {
                 .append("id", id)
                 .append("vehicle", vehicle)
                 .append("user", user)
-                .append("startDate", startDate)
-                .append("endDate", endDate)
+                .append("date", date)
                 .toString();
     }
 }
