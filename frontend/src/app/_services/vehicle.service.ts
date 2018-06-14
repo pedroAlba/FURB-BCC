@@ -24,7 +24,7 @@ export class VehicleService {
     return this.http.delete(this.baseAPI + '/' + id, {responseType: 'text'});
   }
 
-  updateVehicle(id: string, vehicle: VehicleDTO){
+  updateVehicle(id: string, vehicle: VehicleDTO) {
     return this.http.put(this.baseAPI + '/' + id, vehicle);
   }
 }

@@ -83,7 +83,7 @@ const MAT_MODULES = [
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { NavbarComponent } from './navbar/navbar.component';
-import { RentsComponent, RentDialog } from './rents/rents.component';
+import { RentsComponent } from './rents/rents.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { AlertComponent } from './_directives';
@@ -92,6 +92,7 @@ import { AdminComponent, DialogOverviewExampleDialog } from './admin/admin.compo
 import { VehicleService } from './_services/vehicle.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RentService } from './_services/rent.service';
+import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
 
 
 @NgModule({
@@ -119,7 +120,7 @@ import { RentService } from './_services/rent.service';
         AlertComponent,
         AdminComponent,
         DialogOverviewExampleDialog,
-        RentDialog
+        RentDialogComponent
     ],
     providers: [
         AuthGuard,
@@ -131,7 +132,7 @@ import { RentService } from './_services/rent.service';
         AlertService,
         {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
     ],
-    entryComponents: [DialogOverviewExampleDialog, RentDialog],
+    entryComponents: [DialogOverviewExampleDialog, RentDialogComponent],
     bootstrap: [AppComponent],
 })
 

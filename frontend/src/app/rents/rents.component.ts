@@ -1,20 +1,19 @@
 import { NavbarService } from '../navbar/navbar.service';
 import { Component, OnInit, ViewChild, Inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatPaginator, MatSort, MatTableDataSource, MatDialogRef, MAT_DIALOG_DATA, MatIconRegistry, MatDialog } from '@angular/material';
-import { Observable } from 'rxjs/Observable';
 import { merge } from 'rxjs/observable/merge';
 import { of as observableOf } from 'rxjs/observable/of';
 import { catchError } from 'rxjs/operators/catchError';
 import { map } from 'rxjs/operators/map';
 import { startWith } from 'rxjs/operators/startWith';
 import { switchMap } from 'rxjs/operators/switchMap';
-import { environment } from '../../environments/environment';
 import { VehicleDTO } from '../_models/vehicle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RentDTO } from '../_models/rent';
 import { RentService } from '../_services/rent.service';
-import { AuthenticationService } from '../_services';
+import { VehicleService } from '../_services/vehicle.service';
+import { RentDialogComponent } from './dialog/rent-dialog.component';
+import { MatTableDataSource, MatPaginator, MatSort, MatIconRegistry, MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-rents',
@@ -25,8 +24,7 @@ export class RentsComponent implements OnInit {
 
   displayedColumns = ['location', 'model', 'rentalValue', 'category', 'actions'];
 
-  vehicleDatabase: ExampleHttpDao | null;
-  data: GithubApi[] = [];
+  data: VehicleDTO[] = [];
 
   rent: RentDTO = new RentDTO();
 
@@ -45,7 +43,8 @@ export class RentsComponent implements OnInit {
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
     private rentService: RentService,
-    private authService: AuthenticationService) {
+    private vehicleService: VehicleService,
+    private snackBar: MatSnackBar) {
     iconRegistry.addSvgIcon(
       'rent',
       sanitizer.bypassSecurityTrustResourceUrl('assets/car.svg'));
@@ -55,8 +54,6 @@ export class RentsComponent implements OnInit {
 
     this.nav.show();
 
-    this.vehicleDatabase = new ExampleHttpDao(this.http);
-
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
@@ -65,7 +62,7 @@ export class RentsComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.vehicleDatabase.getVehicles(
+          return this.vehicleService.getVehicles(
             this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
@@ -83,70 +80,29 @@ export class RentsComponent implements OnInit {
   }
 
   doRent(row) {
-    console.log(row);
-    //TODO: Pesquisar no backend quais são os dias que estão reservados para esse veiculo
-    const dialogRef = this.dialog.open(RentDialog, {
+
+    const dialogRef = this.dialog.open(RentDialogComponent, {
       width: '400px',
       height: '370px',
       data: { date: this.rent.date }
     });
 
     this.rentService.getOccupiedDays(row.id + '').subscribe(r => {
-      dialogRef.componentInstance.disabledDays = r;  
+      dialogRef.componentInstance.disabledDays = r;
     });
-    
 
     dialogRef.afterClosed().subscribe(r => {
       if (r) {
-        console.log(r);
-        let rent = new RentDTO();
+        const rent = new RentDTO();
         rent.date = r.toLocaleDateString();
         rent.userName = JSON.parse(localStorage.getItem('currentUser'));
         rent.vehicleId = row.id + '';
-        console.log("rent before post");
-        console.log(rent);
         this.rentService.create(rent).subscribe(res => {
-          console.log(res);
+          this.snackBar.open('Veículo reservado com sucesso', '', {
+            duration: 2000,
+          });
         });
       }
     });
-  }
-}
-
-export class ExampleHttpDao {
-  constructor(private http: HttpClient) { }
-
-  getVehicles(sort: string, order: string, page: number): Observable<VehicleDTO[]> {
-    return this.http.get<VehicleDTO[]>(`${environment.baseURL}/api/vehicles`);
-  }
-}
-
-export interface GithubApi {
-  items: VehicleDTO[];
-}
-
-@Component({
-  selector: 'app-dialog-overview-example-dialog',
-  templateUrl: 'rent-dialog.html',
-  styleUrls: ['rent-dialog.component.css']
-})
-export class RentDialog {
-
-  disabledDays: String [];
-  minDate;
-
-  constructor(
-    public dialogRef: MatDialogRef<RentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any,
-    ) {
-      this.minDate = new Date();
-  }
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-
-  myFilter = (d: Date): boolean => {
-    return ! this.disabledDays.some(dayLoop => dayLoop === d.toLocaleDateString());
   }
 }
