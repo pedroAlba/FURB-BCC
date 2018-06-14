@@ -13,7 +13,6 @@ import { environment } from '../../environments/environment';
 import { VehicleDTO } from '../_models/vehicle';
 import { DomSanitizer } from '@angular/platform-browser';
 import { RentDTO } from '../_models/rent';
-import { FormControl } from '@angular/forms';
 import { RentService } from '../_services/rent.service';
 import { AuthenticationService } from '../_services';
 
@@ -26,7 +25,7 @@ export class RentsComponent implements OnInit {
 
   displayedColumns = ['location', 'model', 'rentalValue', 'category', 'actions'];
 
-  exampleDatabase: ExampleHttpDao | null;
+  vehicleDatabase: ExampleHttpDao | null;
   data: GithubApi[] = [];
 
   rent: RentDTO = new RentDTO();
@@ -53,9 +52,10 @@ export class RentsComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.nav.show();
 
-    this.exampleDatabase = new ExampleHttpDao(this.http);
+    this.vehicleDatabase = new ExampleHttpDao(this.http);
 
     // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -65,7 +65,7 @@ export class RentsComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.exampleDatabase.getVehicles(
+          return this.vehicleDatabase.getVehicles(
             this.sort.active, this.sort.direction, this.paginator.pageIndex);
         }),
         map(data => {
