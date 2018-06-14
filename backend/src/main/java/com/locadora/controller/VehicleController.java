@@ -44,6 +44,8 @@ public class VehicleController {
         persisted.setModel(updatedVehicle.getModel());
         persisted.setRentalValue(updatedVehicle.getRentalValue());
         persisted.setYear(updatedVehicle.getYear());
+        persisted.setImageURL(updatedVehicle.getImageURL());
+        persisted.setBrand(updatedVehicle.getBrand());
 
         return vehicleRepository.save(persisted);
     }

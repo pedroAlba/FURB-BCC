@@ -34,6 +34,10 @@ public class Vehicle {
 
     private String characteristics;
 
+    private String imageURL;
+
+    private String brand;
+
     @OneToMany
     private List<Rent> rents;
 
@@ -117,6 +121,22 @@ public class Vehicle {
         this.rents = rents;
     }
 
+    public String getImageURL() {
+        return imageURL;
+    }
+
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
+    }
+
+    public String getBrand() {
+        return brand;
+    }
+
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -129,12 +149,13 @@ public class Vehicle {
                 Objects.equals(getYear(), vehicle.getYear()) &&
                 Objects.equals(getCategory(), vehicle.getCategory()) &&
                 Objects.equals(getRentalValue(), vehicle.getRentalValue()) &&
+                Objects.equals(getImageURL(), vehicle.getImageURL()) &&
                 Objects.equals(getCharacteristics(), vehicle.getCharacteristics());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getLocation(), getDoors(), getModel(), getYear(), getCategory(), getRentalValue(), getCharacteristics());
+        return Objects.hash(getId(), getLocation(), getDoors(), getModel(), getYear(), getCategory(), getRentalValue(), getCharacteristics(), getImageURL());
     }
 
     @Override
@@ -148,6 +169,7 @@ public class Vehicle {
                 .append("category", category)
                 .append("rentalValue", rentalValue)
                 .append("characteristics", characteristics)
+                .append("imageURL", imageURL)
                 .toString();
     }
 }

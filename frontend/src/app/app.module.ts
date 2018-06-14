@@ -1,6 +1,6 @@
 ﻿import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { routing } from './app.routing';
@@ -106,7 +106,8 @@ import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
         routing,
         MAT_MODULES,
         BrowserAnimationsModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        ReactiveFormsModule,
     ],
     declarations: [
         AppComponent,
@@ -120,7 +121,7 @@ import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
         AlertComponent,
         AdminComponent,
         DialogOverviewExampleDialog,
-        RentDialogComponent
+        RentDialogComponent,
     ],
     providers: [
         AuthGuard,

@@ -29,6 +29,12 @@
     <textarea matInput [(ngModel)]="data.characteristics" placeholder="Caracteristicas"></textarea>
   </mat-form-field>
 
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.imageURL" placeholder="Link imagem">
+  </mat-form-field>  
+
+
+
 </div>
 <div mat-dialog-actions> 
   <button mat-button (click)="onNoClick()">Cancelar</button>

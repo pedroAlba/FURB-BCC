@@ -8,6 +8,7 @@ import { switchMap } from 'rxjs/operators/switchMap';
 import { map } from 'rxjs/operators/map';
 import { catchError } from 'rxjs/operators/catchError';
 import { Observable } from 'rxjs/Observable';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -66,18 +67,19 @@ export class AdminComponent implements OnInit {
   edit(row) {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '500px',
-      height: '370px',
+      height: '400px',
       data: { location: row.location + '',
               doors: row.doors + '',
               model: row.model + '',
               year: row.year + '',
               category: row.category + '',
               rentalValue: row.rentalValue + '',
-              characteristics: row.characteristics + ''}
+              characteristics: row.characteristics + '',
+              imageURL: row.imageURL + '',}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result) {        
+      if (result) {
         this.vehicleService.updateVehicle(row.id, result).subscribe(response => {
           this.snackBar.open('Veículo atualizado com sucesso!', '', {
             duration: 2000,
@@ -104,14 +106,16 @@ export class AdminComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
       width: '500px',
-      height: '370px',
+      height: '400px',
       data: { location: this.vehicle.location,
               doors: this.vehicle.doors,
               model: this.vehicle.model,
               year: this.vehicle.year,
               category: this.vehicle.category,
               rentalValue: this.vehicle.rentalValue,
-              characteristics: this.vehicle.characteristics}
+              characteristics: this.vehicle.characteristics,
+              imageURL: this.vehicle.imageURL,
+            }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -142,9 +146,12 @@ export class AdminComponent implements OnInit {
 })
 export class DialogOverviewExampleDialog {
 
+  stateCtrl: FormControl;
+  filteredStates: Observable<any[]>;
+
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any) {}
 
   onNoClick(): void {
     this.dialogRef.close();

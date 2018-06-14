@@ -7,4 +7,5 @@ export class VehicleDTO {
     category: string;
     rentalValue: string;
     characteristics: string;
+    imageURL: string;
 }
