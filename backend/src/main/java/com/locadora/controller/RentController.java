@@ -1,6 +1,5 @@
 package com.locadora.controller;
 
-import com.locadora.exception.InvalidParametersException;
 import com.locadora.exception.ResourceNotFoundException;
 import com.locadora.model.Rent;
 import com.locadora.model.RentDTO;
@@ -13,11 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @CrossOrigin(origins="**")
@@ -63,9 +59,9 @@ public class RentController {
     }
 
     @GetMapping("/days/{id}")
-    public List<LocalDate> getUnavailableDays(@PathVariable(value = "id") Long vehicleId){
+    public ResponseEntity getUnavailableDays(@PathVariable(value = "id") Long vehicleId){
         List<Rent> vehicleRents = rentRepository.findAll().stream().filter(r -> r.getVehicle().getId().equals(vehicleId)).collect(Collectors.toList());
-        return vehicleRents.stream().map(Rent::getDate).collect(Collectors.toList());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
+        return ResponseEntity.ok().body(vehicleRents.stream().map(Rent::getDate).map(d -> d.format(formatter)).collect(Collectors.toList()));
     }
-
 }

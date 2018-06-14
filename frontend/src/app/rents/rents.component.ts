@@ -41,12 +41,12 @@ export class RentsComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private nav: NavbarService,
-              private http: HttpClient,
-              iconRegistry: MatIconRegistry,
-              sanitizer: DomSanitizer,
-              public dialog: MatDialog,
-              private rentService: RentService,
-              private authService: AuthenticationService) {
+    private http: HttpClient,
+    iconRegistry: MatIconRegistry,
+    sanitizer: DomSanitizer,
+    public dialog: MatDialog,
+    private rentService: RentService,
+    private authService: AuthenticationService) {
     iconRegistry.addSvgIcon(
       'rent',
       sanitizer.bypassSecurityTrustResourceUrl('assets/car.svg'));
@@ -91,8 +91,13 @@ export class RentsComponent implements OnInit {
       data: { date: this.rent.date }
     });
 
+    this.rentService.getOccupiedDays(row.id + '').subscribe(r => {
+      dialogRef.componentInstance.disabledDays = r;  
+    });
+    
+
     dialogRef.afterClosed().subscribe(r => {
-      if(r){
+      if (r) {
         console.log(r);
         let rent = new RentDTO();
         rent.date = r.toLocaleDateString();
@@ -100,7 +105,7 @@ export class RentsComponent implements OnInit {
         rent.vehicleId = row.id + '';
         console.log("rent before post");
         console.log(rent);
-        this.rentService.create(rent).subscribe(res =>{
+        this.rentService.create(rent).subscribe(res => {
           console.log(res);
         });
       }
@@ -127,11 +132,21 @@ export interface GithubApi {
 })
 export class RentDialog {
 
+  disabledDays: String [];
+  minDate;
+
   constructor(
     public dialogRef: MatDialogRef<RentDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) { }
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    ) {
+      this.minDate = new Date();
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
+  }
+
+  myFilter = (d: Date): boolean => {
+    return ! this.disabledDays.some(dayLoop => dayLoop === d.toLocaleDateString());
   }
 }

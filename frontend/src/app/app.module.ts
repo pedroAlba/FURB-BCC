@@ -45,6 +45,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MAT_DATE_LOCALE,
 } from '@angular/material';
 
 const MAT_MODULES = [
@@ -136,7 +137,8 @@ import { RentService } from './_services/rent.service';
         },
         NavbarService,
         AlertService,
-        DataService
+        DataService,
+        {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
     ],
     entryComponents: [DialogOverviewExampleDialog, RentDialog],
     bootstrap: [AppComponent],
