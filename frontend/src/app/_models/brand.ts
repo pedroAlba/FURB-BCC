@@ -1,4 +1,4 @@
 export class Brand{
-    name: String,
-    imageURL: String
+    name: String;
+    imageURL: String;
 }

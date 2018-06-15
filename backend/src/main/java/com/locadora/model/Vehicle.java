@@ -36,6 +36,7 @@ public class Vehicle {
 
     private String imageURL;
 
+    @ManyToOne
     private Brand brand;
 
     @OneToMany

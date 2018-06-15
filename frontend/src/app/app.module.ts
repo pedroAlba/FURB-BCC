@@ -88,11 +88,13 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { AlertComponent } from './_directives';
 import { NavbarService } from './navbar/navbar.service';
-import { AdminComponent, DialogOverviewExampleDialog } from './admin/admin.component';
+import { AdminComponent, } from './admin/admin.component';
 import { VehicleService } from './_services/vehicle.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RentService } from './_services/rent.service';
 import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
+import { BrandService } from './_services/brand.service';
+import { VehicleDialogComponent } from './dialogs/vehicle/vehicle-dialog.component';
 
 
 @NgModule({
@@ -120,7 +122,7 @@ import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
         ContactComponent,
         AlertComponent,
         AdminComponent,
-        DialogOverviewExampleDialog,
+        VehicleDialogComponent,
         RentDialogComponent,
     ],
     providers: [
@@ -131,9 +133,10 @@ import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
         RentService,
         NavbarService,
         AlertService,
+        BrandService,        
         {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
     ],
-    entryComponents: [DialogOverviewExampleDialog, RentDialogComponent],
+    entryComponents: [VehicleDialogComponent, RentDialogComponent],
     bootstrap: [AppComponent],
 })
 

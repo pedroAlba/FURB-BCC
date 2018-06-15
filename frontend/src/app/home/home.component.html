@@ -8,11 +8,11 @@
       <mat-card-subtitle>Is the first order in numeric</mat-card-subtitle>
     </mat-card-title-group> -->
     <mat-card-header>        
-        <img *ngIf=vehicle.brand mat-card-avatar src={{vehicle.brand.flag}} alt="Photo of a Shiba Inu">
+        <img *ngIf=vehicle.brand mat-card-avatar src={{vehicle.brand.imageURL}} alt="Logo">
         <mat-card-title>{{vehicle.model}}</mat-card-title>
         <mat-card-subtitle>{{vehicle.year}}</mat-card-subtitle>
       </mat-card-header>
-      <img mat-card-image src={{vehicle.imageURL}} alt="Photo of a Shiba Inu">
+      <img mat-card-image src={{vehicle.imageURL}} alt="Veiculo">
       <mat-card-content>
         <p>
           R$ {{vehicle.rentalValue}}

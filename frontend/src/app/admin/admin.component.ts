@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource, MatPaginator, MatSort, MatDialogConfig } from '@angular/material';
 import { VehicleDTO } from '../_models/vehicle';
 import { VehicleService } from '../_services/vehicle.service';
 import { merge } from 'rxjs/observable/merge';
@@ -8,7 +8,9 @@ import { switchMap } from 'rxjs/operators/switchMap';
 import { map } from 'rxjs/operators/map';
 import { catchError } from 'rxjs/operators/catchError';
 import { Observable } from 'rxjs/Observable';
-import { FormControl } from '@angular/forms';
+import { BrandService } from '../_services/brand.service';
+import { Brand } from '../_models/brand';
+import { VehicleDialogComponent } from '../dialogs/vehicle/vehicle-dialog.component';
 
 @Component({
   selector: 'app-admin',
@@ -17,18 +19,18 @@ import { FormControl } from '@angular/forms';
 })
 export class AdminComponent implements OnInit {
 
-  vehicle: VehicleDTO;
   displayedColumns = ['id', 'location', 'doors', 'model', 'year', 'category', 'rentalValue', 'actions'];
 
   exampleDatabase: VehicleService | null;
   data: VehicleDTO[] = [];
 
+  imageURL;
+  brandName;
+
   resultsLength = 0;
   isLoadingResults = true;
   isRateLimitReached = false;
 
-  brandName;
-  
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -37,9 +39,9 @@ export class AdminComponent implements OnInit {
 
   constructor(public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private vehicleService: VehicleService) {
-    this.vehicle = new VehicleDTO();
-}
+    private vehicleService: VehicleService,
+    private brandService: BrandService) {
+  }
 
   ngOnInit() {
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
@@ -66,33 +68,59 @@ export class AdminComponent implements OnInit {
       ).subscribe(data => this.dataSource.data = data);
   }
 
-  edit(row) {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '500px',
-      height: '400px',
-      data: { location: row.location + '',
-              doors: row.doors + '',
-              model: row.model + '',
-              year: row.year + '',
-              category: row.category + '',
-              rentalValue: row.rentalValue + '',
-              characteristics: row.characteristics + '',
-              imageURL: row.imageURL + '',}
-    });
+  save(): void {
+
+    const dialogConfig = this.buildDefaultConfigDialog();
+
+    dialogConfig.data = {}
+
+
+    const dialogRef = this.dialog.open(VehicleDialogComponent, dialogConfig);
+
+    dialogRef.componentInstance.description = 'Cadastro'
+    dialogRef.componentInstance.status = 'Salvar';
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.vehicleService.updateVehicle(row.id, result).subscribe(response => {
-          this.snackBar.open('Veículo atualizado com sucesso!', '', {
+        this.vehicleService.create(result).subscribe(() => {
+          this.snackBar.open('Veículo cadastrado com sucesso!', '', {
             duration: 2000,
           });
-          // Recarrega e lista o novo veiculo
           this.refreshTable();
-          this.vehicle = new VehicleDTO();
-        }, err => {
-          console.log(err);
         });
       }
+    });
+  }
+
+  edit(row) {
+
+    const dialogConfig = this.buildDefaultConfigDialog();
+
+    dialogConfig.data = {
+      location: row.location + '',
+      doors: row.doors + '',
+      model: row.model + '',
+      year: row.year + '',
+      category: row.category + '',
+      rentalValue: row.rentalValue + '',
+      characteristics: row.characteristics + '',
+      imageURL: row.imageURL + '',
+      brand: row.brand,
+    }
+
+    const dialogRef = this.dialog.open(VehicleDialogComponent, dialogConfig);
+
+    dialogRef.componentInstance.description = 'Atualização';
+    dialogRef.componentInstance.status = 'Atualizar';
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+      this.vehicleService.updateVehicle(row.id, result).subscribe(() => {
+        this.snackBar.open('Veículo atualizado com sucesso!', '', {
+          duration: 2000,
+        });
+        this.refreshTable();
+      })};
     });
   }
 
@@ -105,34 +133,26 @@ export class AdminComponent implements OnInit {
     });
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-      width: '500px',
-      height: '400px',
-      data: { location: this.vehicle.location,
-              doors: this.vehicle.doors,
-              model: this.vehicle.model,
-              year: this.vehicle.year,
-              category: this.vehicle.category,
-              rentalValue: this.vehicle.rentalValue,
-              characteristics: this.vehicle.characteristics,
-              imageURL: this.vehicle.imageURL,
-            }
-    });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.vehicle = result;
-        this.vehicleService.create(this.vehicle).subscribe(response => {
-          this.snackBar.open('Veículo cadastrado com sucesso!', '', {
-            duration: 2000,
-          });
-          // Recarrega e lista o novo veiculo
-          this.refreshTable();
-          this.vehicle = new VehicleDTO();
-        });
-      }
+
+  saveBrand() {
+    const b = new Brand();
+    b.imageURL = this.imageURL;
+    b.name = this.brandName;
+    this.brandService.create(b).subscribe(r => {
+      this.snackBar.open('Marca cadastrada com sucesso', '', {
+        duration: 2000,
+      });
     });
+  }
+
+  private buildDefaultConfigDialog(): MatDialogConfig {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '500px';
+    dialogConfig.height = '500px';
+    return dialogConfig;
   }
 
   refreshTable() {
@@ -141,21 +161,3 @@ export class AdminComponent implements OnInit {
 }
 
 
-@Component({
-  selector: 'app-dialog-overview-example-dialog',
-  templateUrl: 'add-vehicle-dialog.html',
-  styleUrls: ['./add-vehicle-dialog.component.css']
-})
-export class DialogOverviewExampleDialog {
-
-  stateCtrl: FormControl;
-  filteredStates: Observable<any[]>;
-
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: any) {}
-
-  onNoClick(): void {
-    this.dialogRef.close();
-  }
-}

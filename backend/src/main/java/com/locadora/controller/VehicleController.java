@@ -1,7 +1,9 @@
 package com.locadora.controller;
 
 import com.locadora.exception.ResourceNotFoundException;
+import com.locadora.model.Brand;
 import com.locadora.model.Vehicle;
+import com.locadora.repository.BrandRepository;
 import com.locadora.repository.VehicleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins="**")
 @RestController
@@ -16,10 +19,12 @@ import java.util.List;
 public class VehicleController {
 
     private final VehicleRepository vehicleRepository;
+    private final BrandRepository brandRepository;
 
     @Autowired
-    public VehicleController(VehicleRepository vehicleRepository) {
+    public VehicleController(VehicleRepository vehicleRepository, BrandRepository brandRepository) {
         this.vehicleRepository = vehicleRepository;
+        this.brandRepository = brandRepository;
     }
 
     @GetMapping
@@ -29,6 +34,8 @@ public class VehicleController {
 
     @PostMapping
     public Vehicle saveVehicle(@Valid @RequestBody Vehicle v){
+        Optional<Brand> b = brandRepository.findById(v.getBrand().getId());
+        b.ifPresent(v::setBrand);
         return vehicleRepository.save(v);
     }
 

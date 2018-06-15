@@ -7,3 +7,14 @@
   .example-full-width {
     width: 100%;
   }
+
+  
+
+.mat-form-field {
+  display: block;
+}
+
+textarea {
+  height: 100px;
+  resize: vertical;
+}

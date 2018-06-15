@@ -63,7 +63,6 @@
         </mat-cell>
       </ng-container>
 
-
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
@@ -73,28 +72,29 @@
   </div>
 
   <mat-card-actions>
-    <button (click)="openDialog()" class="md-fab-bottom-right2" mat-mini-fab color="add">
+    <button (click)="save()" class="md-fab-bottom-right2" mat-mini-fab color="add">
       <a md-mini-fab class="custom-button">
         <mat-icon>add</mat-icon>
       </a>
     </button>
   </mat-card-actions>
-
 </mat-card>
 
-<mat-card>
-    <mat-card-title>
-        Cadastro de Marcas
-    </mat-card-title>
+<mat-card style="margin:2em;">
 
+    <mat-card-title>
+        Cadastro de Montadoras
+    </mat-card-title>
 
     <form class="example-form">
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="brandName" name="brandName" matInput placeholder="Favorite food" value="Sushi">
+          <input [(ngModel)]="brandName" name="brandName" matInput placeholder="Nome" value="Sushi">
         </mat-form-field>
       
         <mat-form-field class="example-full-width">
-          <input [(ngModel)]="imageURL" name="imageURL" matInput placeholder="Leave a comment">
+          <input [(ngModel)]="imageURL" name="imageURL" matInput placeholder="URL Imagem">
         </mat-form-field>
-      </form>
+
+        <button class="mat-raised-button mat-primary"(click)="saveBrand()">Save</button>
+    </form>
 </mat-card>
