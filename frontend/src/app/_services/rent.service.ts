@@ -19,4 +19,8 @@ export class RentService {
         return this.http.get<String []>(`${environment.baseURL}/api/rent/days/` + vehicleId);
     }
 
+    getUserRents(username: string): Observable<RentDTO[]> {
+        return this.http.get<RentDTO[]> (`${environment.baseURL}/api/rent/user/` + username)
+    }
+
 }

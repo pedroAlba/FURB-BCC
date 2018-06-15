@@ -64,4 +64,9 @@ public class RentController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/YYYY");
         return ResponseEntity.ok().body(vehicleRents.stream().map(Rent::getDate).map(d -> d.format(formatter)).collect(Collectors.toList()));
     }
+
+    @GetMapping("/user/{username}")
+    public ResponseEntity getUserRents(@PathVariable(value = "username") String username){
+        return ResponseEntity.ok().body(rentRepository.findAll().stream().filter(r -> r.getUser().getUsername().equals(username)));
+    }
 }
