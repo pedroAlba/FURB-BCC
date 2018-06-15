@@ -1,6 +1,12 @@
 mat-card {    
     max-width: 300px;
     margin: 20px;
+
+  }
+
+  mat-card img{
+      position: absolute;
+      min-height: 100% !important;
   }
   
   #card-container {

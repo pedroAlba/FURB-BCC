@@ -92,7 +92,7 @@ import { AdminComponent, } from './admin/admin.component';
 import { VehicleService } from './_services/vehicle.service';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { RentService } from './_services/rent.service';
-import { RentDialogComponent } from './rents/dialog/rent-dialog.component';
+import { RentDialogComponent } from './dialogs/rent/rent-dialog.component';
 import { BrandService } from './_services/brand.service';
 import { VehicleDialogComponent } from './dialogs/vehicle/vehicle-dialog.component';
 

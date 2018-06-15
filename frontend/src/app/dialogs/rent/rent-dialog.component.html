@@ -2,11 +2,11 @@
   <p>Reserva</p>
 
   <mat-form-field>
-    <input matInput [min]="minDate" [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Choose a date" [(ngModel)]="data">
+    <input matInput [min]="minDate" [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Escolha uma data" [(ngModel)]="data">
     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
   </mat-form-field>
-
+  
 </div>
 <div mat-dialog-actions> 
   <button mat-button (click)="onNoClick()">Cancelar</button>

@@ -2,11 +2,6 @@
 
   <div id="card-container" style="margin-top: 10%" >  
   <mat-card *ngFor="let vehicle of vehicles">
-    <!-- <mat-card-title-group>
-      <img mat-card-sm-image src="https://image.freepik.com/free-photo/blue-surface-with-creases_1160-191.jpg">
-      <mat-card-title>{{car}}</mat-card-title>
-      <mat-card-subtitle>Is the first order in numeric</mat-card-subtitle>
-    </mat-card-title-group> -->
     <mat-card-header>        
         <img *ngIf=vehicle.brand mat-card-avatar src={{vehicle.brand.imageURL}} alt="Logo">
         <mat-card-title>{{vehicle.model}}</mat-card-title>

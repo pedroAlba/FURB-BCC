@@ -12,7 +12,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { RentDTO } from '../_models/rent';
 import { RentService } from '../_services/rent.service';
 import { VehicleService } from '../_services/vehicle.service';
-import { RentDialogComponent } from './dialog/rent-dialog.component';
+import { RentDialogComponent } from '../dialogs/rent/rent-dialog.component';
 import { MatTableDataSource, MatPaginator, MatSort, MatIconRegistry, MatDialog, MatSnackBar } from '@angular/material';
 
 @Component({
@@ -54,7 +54,6 @@ export class RentsComponent implements OnInit {
 
     this.nav.show();
 
-    // If the user changes the sort order, reset back to the first page.
     this.sort.sortChange.subscribe(() => this.paginator.pageIndex = 0);
 
     merge(this.sort.sortChange, this.paginator.page)
@@ -82,8 +81,8 @@ export class RentsComponent implements OnInit {
   doRent(row) {
 
     const dialogRef = this.dialog.open(RentDialogComponent, {
-      width: '400px',
-      height: '370px',
+      width: '300px',
+      height: '270px',
       data: { date: this.rent.date }
     });
 
