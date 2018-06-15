@@ -36,7 +36,7 @@ public class Vehicle {
 
     private String imageURL;
 
-    private String brand;
+    private Brand brand;
 
     @OneToMany
     private List<Rent> rents;
@@ -129,11 +129,11 @@ public class Vehicle {
         this.imageURL = imageURL;
     }
 
-    public String getBrand() {
+    public Brand getBrand() {
         return brand;
     }
 
-    public void setBrand(String brand) {
+    public void setBrand(Brand brand) {
         this.brand = brand;
     }
 

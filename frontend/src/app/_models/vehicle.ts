@@ -1,3 +1,5 @@
+import { Brand } from "./brand";
+
 export class VehicleDTO {
     id: string;
     location: string;
@@ -8,4 +10,5 @@ export class VehicleDTO {
     rentalValue: string;
     characteristics: string;
     imageURL: string;
+    brand: Brand;
 }

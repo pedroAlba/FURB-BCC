@@ -27,6 +27,8 @@ export class AdminComponent implements OnInit {
   isLoadingResults = true;
   isRateLimitReached = false;
 
+  brandName;
+  
   dataSource = new MatTableDataSource();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
