@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+﻿import { Injectable, Output, EventEmitter } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
@@ -7,6 +7,9 @@ import { User } from '../_models';
 
 @Injectable()
 export class AuthenticationService {
+
+    @Output() getLoggedInName: EventEmitter<any> = new EventEmitter();
+    
     constructor(private http: HttpClient) { }
 
     login(username: string, password: string) {
@@ -16,8 +19,8 @@ export class AuthenticationService {
                 if (user && Boolean(user)) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify(username));
+                    this.getLoggedInName.emit(username);
                 }
-
                 return user;
             });
     }
@@ -27,7 +30,7 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
     }
 
-    getCurrentUser() : User {
-        return <User> JSON.parse(localStorage.getItem('currentUser'));
+    getCurrentUser() : string {
+        return <string> JSON.parse(localStorage.getItem('currentUser'));
     }
 }

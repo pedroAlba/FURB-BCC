@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NavbarService } from './navbar.service';
 import { AuthenticationService, UserService } from '../_services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../_models';
 
 @Component({
@@ -14,27 +14,30 @@ import { User } from '../_models';
 export class NavbarComponent implements AfterViewInit, OnDestroy{
 
   private currentUser: string;
-  private isAdmin = false;
 
   constructor(public nav: NavbarService,
     private auth: AuthenticationService,
     private router: Router,
     private changeDetector: ChangeDetectorRef,
-    private user: UserService) {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.isAdmin = this.currentUser && this.currentUser === 'admin';
+    private user: UserService,
+    ) {
+    this.auth.getLoggedInName.subscribe(name => {
+      this.currentUser = name;
+    })
   }
 
   ngAfterViewInit() {
-    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnDestroy() {
-    console.log('destroy');
   }
 
   ngAfterViewChecked(){
     this.changeDetector.detectChanges();
+  }
+
+  isAdmin(){
+    return this.currentUser === 'admin';
   }
 
 }

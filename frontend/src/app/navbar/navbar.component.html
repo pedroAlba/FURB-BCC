@@ -11,10 +11,10 @@
     <span class="fill-remaining-space"></span>
     <div fxLayout="row" fxShow="false" fxShow.gt-sm>
         <button mat-button routerLink="">Veículos</button>
-        <button mat-button routerLink="rents" onclick="teste">Reservas</button>
+        <button mat-button routerLink="rents">Reservas</button>
         <button mat-button routerLink="about">Quem Somos</button>
         <button mat-button routerLink="contact">Contato</button>
-        <button mat-button routerLink="admin">Administração</button>
+        <button mat-button routerLink="admin" *ngIf="isAdmin()">Administração</button>
         <button mat-button routerLink="login">Sair</button>
     </div>
 

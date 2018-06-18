@@ -143,6 +143,8 @@ export class AdminComponent implements OnInit {
       this.snackBar.open('Marca cadastrada com sucesso', '', {
         duration: 2000,
       });
+      this.brandName = '';
+      this.imageURL = '';
     });
   }
 
@@ -159,5 +161,3 @@ export class AdminComponent implements OnInit {
     this.paginator._changePageSize(this.paginator.pageSize);
   }
 }
-
-

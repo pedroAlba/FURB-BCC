@@ -15,14 +15,14 @@ import { environment } from '../../environments/environment';
 })
 
 export class HomeComponent implements OnInit {
-    currentUser: User;
+    currentUser: string;
     
     vehicles: VehicleDTO[];
 
-    constructor(private userService: UserService,
+    constructor(private authService: AuthenticationService,
                 private nav: NavbarService,
                 private http: HttpClient) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.currentUser = authService.getCurrentUser();
     }
 
     ngOnInit() {

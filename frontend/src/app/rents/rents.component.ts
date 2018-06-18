@@ -14,6 +14,7 @@ import { RentService } from '../_services/rent.service';
 import { VehicleService } from '../_services/vehicle.service';
 import { RentDialogComponent } from '../dialogs/rent/rent-dialog.component';
 import { MatTableDataSource, MatPaginator, MatSort, MatIconRegistry, MatDialog, MatSnackBar } from '@angular/material';
+import { AuthenticationService } from '../_services/authentication.service';
 
 @Component({
   selector: 'app-rents',
@@ -37,8 +38,9 @@ export class RentsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private nav: NavbarService,
-    private http: HttpClient,
+  constructor(
+    private nav: NavbarService,
+    private auth: AuthenticationService,
     iconRegistry: MatIconRegistry,
     sanitizer: DomSanitizer,
     public dialog: MatDialog,
@@ -94,7 +96,7 @@ export class RentsComponent implements OnInit {
       if (r) {
         const rent = new RentDTO();
         rent.date = r.toLocaleDateString();
-        rent.userName = JSON.parse(localStorage.getItem('currentUser'));
+        rent.userName = this.auth.getCurrentUser();
         rent.vehicleId = row.id + '';
         this.rentService.create(rent).subscribe(res => {
           this.snackBar.open('Veículo reservado com sucesso', '', {
