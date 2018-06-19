@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from '../_models/index';
 import { environment } from '../../environments/environment';
-import { RentDTO } from '../_models/rent';
-import { Observable } from 'rxjs/Observable';
+import { RentDTO } from '../_models/rentDTO';
+import { Observable } from 'rxjs';
+import { Rent } from '../_models/rent';
 
 @Injectable()
 export class RentService {
@@ -19,8 +19,12 @@ export class RentService {
         return this.http.get<String []>(`${environment.baseURL}/api/rent/days/` + vehicleId);
     }
 
-    getUserRents(username: string): Observable<RentDTO[]> {
-        return this.http.get<RentDTO[]> (`${environment.baseURL}/api/rent/user/` + username)
+    getUserRents(username: string): Observable<Rent[]> {
+        let res =  this.http.get<Rent[]> (`${environment.baseURL}/api/rent/user/` + username)
+        res.subscribe(v => {
+            console.log(v);
+        })
+        return res;
     }
 
 }

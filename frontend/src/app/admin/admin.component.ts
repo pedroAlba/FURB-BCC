@@ -1,5 +1,5 @@
-import { Component, OnInit, Inject, ViewChild, ChangeDetectorRef } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar, MatTableDataSource, MatPaginator, MatSort, MatDialogConfig } from '@angular/material';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog,  MatSnackBar, MatTableDataSource, MatPaginator, MatSort, MatDialogConfig } from '@angular/material';
 import { VehicleDTO } from '../_models/vehicle';
 import { VehicleService } from '../_services/vehicle.service';
 import { merge } from 'rxjs/observable/merge';
@@ -115,12 +115,13 @@ export class AdminComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-      this.vehicleService.updateVehicle(row.id, result).subscribe(() => {
-        this.snackBar.open('Veículo atualizado com sucesso!', '', {
-          duration: 2000,
-        });
-        this.refreshTable();
-      })};
+        this.vehicleService.updateVehicle(row.id, result).subscribe(() => {
+          this.snackBar.open('Veículo atualizado com sucesso!', '', {
+            duration: 2000,
+          });
+          this.refreshTable();
+        })
+      };
     });
   }
 
@@ -132,8 +133,6 @@ export class AdminComponent implements OnInit {
       this.refreshTable();
     });
   }
-
-
 
   saveBrand() {
     const b = new Brand();

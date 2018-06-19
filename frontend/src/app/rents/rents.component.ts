@@ -9,7 +9,7 @@ import { startWith } from 'rxjs/operators/startWith';
 import { switchMap } from 'rxjs/operators/switchMap';
 import { VehicleDTO } from '../_models/vehicle';
 import { DomSanitizer } from '@angular/platform-browser';
-import { RentDTO } from '../_models/rent';
+import { RentDTO } from '../_models/rentDTO';
 import { RentService } from '../_services/rent.service';
 import { VehicleService } from '../_services/vehicle.service';
 import { RentDialogComponent } from '../dialogs/rent/rent-dialog.component';
@@ -23,7 +23,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class RentsComponent implements OnInit {
 
-  displayedColumns = ['location', 'model', 'rentalValue', 'category', 'actions'];
+  displayedColumns = ['vehicleId', 'date'];
 
   data: VehicleDTO[] = [];
 
@@ -63,8 +63,7 @@ export class RentsComponent implements OnInit {
         startWith({}),
         switchMap(() => {
           this.isLoadingResults = true;
-          return this.vehicleService.getVehicles(
-            this.sort.active, this.sort.direction, this.paginator.pageIndex);
+          return this.rentService.getUserRents(this.auth.getCurrentUser());     
         }),
         map(data => {
           this.isLoadingResults = false;

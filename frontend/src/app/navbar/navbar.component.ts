@@ -1,8 +1,7 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { NavbarService } from './navbar.service';
 import { AuthenticationService, UserService } from '../_services';
-import { Router, ActivatedRoute } from '@angular/router';
-import { User } from '../_models';
+import { Router } from '@angular/router';
 
 @Component({
   moduleId: module.id,
