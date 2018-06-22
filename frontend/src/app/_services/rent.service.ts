@@ -11,20 +11,21 @@ export class RentService {
 
     constructor(private http: HttpClient) { }
 
+    baseAPI = `${environment.baseURL}/api/rent/`;
     create(rent: RentDTO) {
         return this.http.post(`${environment.baseURL}/api/rent/`, rent);
     }
 
     getOccupiedDays(vehicleId: string): Observable<String[]> {
-        return this.http.get<String []>(`${environment.baseURL}/api/rent/days/` + vehicleId);
+        return this.http.get<String []>(this.baseAPI + '/days/' + vehicleId);
+    }
+
+    delete(rentId: String) {        
+        return this.http.delete(this.baseAPI + '/' + rentId, {responseType: 'text'});
     }
 
     getUserRents(username: string): Observable<Rent[]> {
-        let res =  this.http.get<Rent[]> (`${environment.baseURL}/api/rent/user/` + username)
-        res.subscribe(v => {
-            console.log(v);
-        })
-        return res;
+        return this.http.get<Rent[]> (this.baseAPI + '/user/' + username)        
     }
 
 }

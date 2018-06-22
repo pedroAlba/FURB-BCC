@@ -26,8 +26,8 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let row; let i=id;">
-          <button mat-icon-button (click)="doRent(row)">
-            <mat-icon svgIcon="rent"></mat-icon>
+          <button mat-icon-button (click)="delete(row)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>

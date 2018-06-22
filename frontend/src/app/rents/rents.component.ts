@@ -23,7 +23,7 @@ import { AuthenticationService } from '../_services/authentication.service';
 })
 export class RentsComponent implements OnInit {
 
-  displayedColumns = ['vehicleId', 'date'];
+  displayedColumns = ['vehicleId', 'date', 'actions'];
 
   data: VehicleDTO[] = [];
 
@@ -79,30 +79,17 @@ export class RentsComponent implements OnInit {
       ).subscribe(data => this.dataSource.data = data);
   }
 
-  doRent(row) {
-
-    const dialogRef = this.dialog.open(RentDialogComponent, {
-      width: '300px',
-      height: '270px',
-      data: { date: this.rent.date }
+  delete(row){
+    console.log(row);
+    this.rentService.delete(row.id).subscribe(() => {
+      this.snackBar.open('Reserva deletada com sucesso!', '', {
+        duration: 2000,
+      });
+      this.refreshTable();
     });
+  }
 
-    this.rentService.getOccupiedDays(row.id + '').subscribe(r => {
-      dialogRef.componentInstance.disabledDays = r;
-    });
-
-    dialogRef.afterClosed().subscribe(r => {
-      if (r) {
-        const rent = new RentDTO();
-        rent.date = r.toLocaleDateString();
-        rent.userName = this.auth.getCurrentUser();
-        rent.vehicleId = row.id + '';
-        this.rentService.create(rent).subscribe(res => {
-          this.snackBar.open('Veículo reservado com sucesso', '', {
-            duration: 2000,
-          });
-        });
-      }
-    });
+  refreshTable() {
+    this.paginator._changePageSize(this.paginator.pageSize);
   }
 }

@@ -74,7 +74,6 @@ export class AdminComponent implements OnInit {
 
     dialogConfig.data = {}
 
-
     const dialogRef = this.dialog.open(VehicleDialogComponent, dialogConfig);
 
     dialogRef.componentInstance.description = 'Cadastro'
