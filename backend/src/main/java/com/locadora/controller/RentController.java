@@ -1,5 +1,21 @@
 package com.locadora.controller;
 
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.locadora.exception.ResourceNotFoundException;
 import com.locadora.model.Rent;
 import com.locadora.model.RentDTO;
@@ -8,13 +24,6 @@ import com.locadora.model.Vehicle;
 import com.locadora.repository.RentRepository;
 import com.locadora.repository.UserRepository;
 import com.locadora.repository.VehicleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.time.format.DateTimeFormatter;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @CrossOrigin(origins="**")
 @RestController
@@ -58,6 +67,13 @@ public class RentController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity updateRent(@PathVariable(value="id") Long rentId, @RequestBody Rent updatedRent) {    
+    	Rent persistedRent = rentRepository.findById(rentId).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", rentId));
+    	updatedRent.setId(persistedRent.getId());
+    	return ResponseEntity.ok().body(rentRepository.save(updatedRent));
+    }
+    
     @GetMapping("/days/{id}")
     public ResponseEntity getUnavailableDays(@PathVariable(value = "id") Long vehicleId){
         List<Rent> vehicleRents = rentRepository.findAll().stream().filter(r -> r.getVehicle().getId().equals(vehicleId)).collect(Collectors.toList());
