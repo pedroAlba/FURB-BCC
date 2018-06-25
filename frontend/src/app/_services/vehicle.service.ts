@@ -16,7 +16,7 @@ export class VehicleService {
     return this.http.post(this.baseAPI, vehicle);
   }
 
-  getVehicles(sort: string, order: string, page: number): Observable<VehicleDTO[]> {
+  getVehicles(): Observable<VehicleDTO[]> {
     return this.http.get<VehicleDTO[]>(this.baseAPI);
   }
 

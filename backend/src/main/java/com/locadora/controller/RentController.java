@@ -68,10 +68,10 @@ public class RentController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateRent(@PathVariable(value="id") Long rentId, @RequestBody Rent updatedRent) {    
+    public ResponseEntity updateRent(@PathVariable(value="id") Long rentId, @RequestBody RentDTO updatedRent) {
     	Rent persistedRent = rentRepository.findById(rentId).orElseThrow(() -> new ResourceNotFoundException("Reserva", "id", rentId));
-    	updatedRent.setId(persistedRent.getId());
-    	return ResponseEntity.ok().body(rentRepository.save(updatedRent));
+    	persistedRent.setDate(updatedRent.getDate());
+    	return ResponseEntity.ok().body(rentRepository.save(persistedRent));
     }
     
     @GetMapping("/days/{id}")

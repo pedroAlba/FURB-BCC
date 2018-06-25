@@ -95,6 +95,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
 import { RentDialogComponent } from './dialogs/rent/rent-dialog.component';
 import { BrandService } from './_services/brand.service';
 import { VehicleDialogComponent } from './dialogs/vehicle/vehicle-dialog.component';
+import { RentEditDialogComponent } from './dialogs/rent/edit/rent-edit-dialog.component';
 
 
 @NgModule({
@@ -124,6 +125,7 @@ import { VehicleDialogComponent } from './dialogs/vehicle/vehicle-dialog.compone
         AdminComponent,
         VehicleDialogComponent,
         RentDialogComponent,
+        RentEditDialogComponent,
     ],
     providers: [
         AuthGuard,
@@ -136,7 +138,7 @@ import { VehicleDialogComponent } from './dialogs/vehicle/vehicle-dialog.compone
         BrandService,        
         {provide: MAT_DATE_LOCALE, useValue: 'pt-BR'}
     ],
-    entryComponents: [VehicleDialogComponent, RentDialogComponent],
+    entryComponents: [VehicleDialogComponent, RentDialogComponent, RentEditDialogComponent],
     bootstrap: [AppComponent],
 })
 

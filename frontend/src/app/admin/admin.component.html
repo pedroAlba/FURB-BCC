@@ -1,18 +1,12 @@
 <mat-card style="margin:2em;">
 
   <mat-card-title>
-    Cadastro de Veículos
+    Veículos
   </mat-card-title>
 
   <div class="example-container mat-elevation-z8" style="margin-top: 100px">
-    <div class="example-loading-shade" *ngIf="isLoadingResults || isRateLimitReached">
-      <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-      <div class="example-rate-limit-reached" *ngIf="isRateLimitReached">
-        Erro ao obter a lista de veículos
-      </div>
-    </div>
-
-    <mat-table #table [dataSource]="dataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+   
+    <mat-table #table [dataSource]="vehicleDataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
 
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
@@ -53,26 +47,26 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef></mat-header-cell>
         <mat-cell *matCellDef="let row; let i=id;">
-          <button mat-icon-button (click)="edit(row)">
+          <button mat-icon-button (click)="editVehicle(row)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
-          <button mat-icon-button (click)="delete(row)">
+          <button mat-icon-button (click)="deleteVehicle(row)">
             <mat-icon aria-label="Delete">delete</mat-icon>
           </button>
         </mat-cell>
       </ng-container>
 
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      <mat-header-row *matHeaderRowDef="displayedVehicleColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedVehicleColumns;"></mat-row>
     </mat-table>
 
-    <mat-paginator [length]="resultsLength" [pageSize]="30">
+    <mat-paginator [length]="vehicleResultsLength" [pageSize]="30">
     </mat-paginator>
   </div>
 
   <mat-card-actions>
-    <button (click)="save()" class="md-fab-bottom-right2" mat-mini-fab color="add">
+    <button (click)="saveVehicle()" class="md-fab-bottom-right2" mat-mini-fab color="add">
       <a md-mini-fab class="custom-button">
         <mat-icon>add</mat-icon>
       </a>
@@ -82,19 +76,74 @@
 
 <mat-card style="margin:2em;">
 
-    <mat-card-title>
-        Cadastro de Montadoras
-    </mat-card-title>
+  <mat-card-title>
+    Reservas
+  </mat-card-title>
 
-    <form class="example-form">
-        <mat-form-field class="example-full-width">
-          <input [(ngModel)]="brandName" name="brandName" matInput placeholder="Nome" value="Sushi">
-        </mat-form-field>
+  <div class="example-container mat-elevation-z8" style="margin-top: 100px">
+   
+    <mat-table #table [dataSource]="rentsDataSource" class="example-table" matSort matSortActive="created" matSortDisableClear matSortDirection="asc">
+
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef>#</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.id }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="username">
+        <mat-header-cell *matHeaderCellDef>Usuário</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.user.name }}</mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="vehicle">
+        <mat-header-cell *matHeaderCellDef>Veículo</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.vehicle.name}}</mat-cell>
+      </ng-container>
+
       
-        <mat-form-field class="example-full-width">
-          <input [(ngModel)]="imageURL" name="imageURL" matInput placeholder="URL Imagem">
-        </mat-form-field>
+      <ng-container matColumnDef="date">
+        <mat-header-cell *matHeaderCellDef>Data</mat-header-cell>
+        <mat-cell *matCellDef="let row">{{ row.date | date: 'dd/MM/yyyy'}}</mat-cell>
+      </ng-container>
 
-        <button class="mat-raised-button mat-primary"(click)="saveBrand()">Save</button>
-    </form>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let row; let i=id;">
+          <button mat-icon-button (click)="editRent(row)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+
+          <button mat-icon-button (click)="deleteRent(row)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedRentColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedRentColumns;"></mat-row>
+    </mat-table>
+
+    <mat-paginator [length]="rentResultsLength" [pageSize]="30">
+    </mat-paginator>
+  </div>
+
+</mat-card>
+
+
+<mat-card style="margin:2em;">
+
+  <mat-card-title>
+    Cadastro de Montadoras
+  </mat-card-title>
+
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input [(ngModel)]="brandName" name="brandName" matInput placeholder="Nome" value="Sushi">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <input [(ngModel)]="imageURL" name="imageURL" matInput placeholder="URL Imagem">
+    </mat-form-field>
+
+    <button class="mat-raised-button mat-primary" (click)="saveBrand()">Save</button>
+  </form>
 </mat-card>

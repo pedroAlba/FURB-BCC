@@ -11,6 +11,8 @@ export class RentDialogComponent {
     disabledDays: String[];
     minDate;
 
+    buttonAction;
+
     constructor(
         public dialogRef: MatDialogRef<RentDialogComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,

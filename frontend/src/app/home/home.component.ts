@@ -49,13 +49,15 @@ export class HomeComponent implements OnInit {
       dialogRef.componentInstance.disabledDays = r;
     });
 
+    dialogRef.componentInstance.buttonAction = 'Reservar';
+
     dialogRef.afterClosed().subscribe(r => {
       if (r) {
         const rent = new RentDTO();
         rent.date = r.toLocaleDateString();
         rent.userName = this.auth.getCurrentUser();
         rent.vehicleId = vehicle.id + '';
-        this.rentService.create(rent).subscribe(res => {
+        this.rentService.create(rent).subscribe(() => {
           this.snackBar.open('Veículo reservado com sucesso', '', {
             duration: 2000,
           });

@@ -1,0 +1,29 @@
+<h2 mat-dialog-title>Reserva</h2>
+
+<mat-dialog-content [formGroup]="form">
+
+  <table class="example-full-width" cellspacing="0">
+    <tr>
+      <td>
+        <mat-form-field>
+          <input matInput placeholder="Usuário" formControlName="user">
+        </mat-form-field>
+      </td>
+      <td>
+        <mat-form-field>
+          <input matInput placeholder="Veículo" formControlName="vehicle">
+        </mat-form-field>
+      </td>
+    </tr>
+  </table>
+
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="mat-raised-button" (click)="close()">
+    Fechar
+  </button>
+  <button class="mat-raised-button mat-primary" (click)="save()" [disabled]="!form.valid">
+    {{status}}
+  </button>
+</mat-dialog-actions>

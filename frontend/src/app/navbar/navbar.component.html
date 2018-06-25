@@ -12,13 +12,9 @@
     <div fxLayout="row" fxShow="false" fxShow.gt-sm>
         <button mat-button routerLink="">Veículos</button>
         <button mat-button routerLink="rents">Reservas</button>
-        <button mat-button routerLink="about">Quem Somos</button>
-        <button mat-button routerLink="contact">Contato</button>
         <button mat-button routerLink="admin" *ngIf="isAdmin()">Administração</button>
         <button mat-button routerLink="login">Sair</button>
     </div>
-
-   
 
     <button mat-button [mat-menu-trigger-for]="menu" fxHide="false" fxHide.gt-sm>
         <mat-icon>menu</mat-icon>
@@ -28,8 +24,6 @@
 
 <mat-menu x-position="before" #menu="matMenu">
     <button mat-menu-item routerLink="rents">Reservas</button>
-    <button mat-menu-item routerLink="about">Quem Somos</button>
-    <button mat-menu-item routerLink="contact">Contato</button>
     <button mat-menu-item routerLink="admin">Administração</button>
     <button mat-menu-item routerLink="login">Sair</button>
 </mat-menu>
