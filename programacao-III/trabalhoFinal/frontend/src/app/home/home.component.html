@@ -1,0 +1,30 @@
+
+
+  <div id="card-container" style="margin-top: 10%" >  
+  <mat-card *ngFor="let vehicle of vehicles">
+    <mat-card-header>        
+        <img *ngIf=vehicle.brand mat-card-avatar src={{vehicle.brand.imageURL}} alt="Logo">
+        <mat-card-title>{{vehicle.model}}</mat-card-title>
+        <mat-card-subtitle>{{vehicle.year}}</mat-card-subtitle>
+      </mat-card-header>
+      <img mat-card-image src={{vehicle.imageURL}} alt="Veiculo" height="188px">
+      <mat-card-content>
+        <p>
+          <mat-icon>attach_money</mat-icon>
+          {{vehicle.rentalValue}}   
+        </p>
+        <p>
+          <mat-icon>event_seat</mat-icon>
+          {{vehicle.doors}}
+        </p>
+        <p>
+          <mat-icon>commute</mat-icon>
+          {{vehicle.category}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button cdkFocusInitial (click)="doRent(vehicle)">Reservar</button>
+      </mat-card-actions>
+  </mat-card>
+  </div>
+  
