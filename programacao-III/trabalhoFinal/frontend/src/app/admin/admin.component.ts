@@ -23,7 +23,7 @@ import { RentDTO } from '../_models/rentDTO';
 })
 export class AdminComponent implements OnInit {
 
-  displayedVehicleColumns = ['id', 'location', 'doors', 'model', 'year', 'category', 'rentalValue', 'actions'];
+  displayedVehicleColumns = ['id', 'model', 'location', 'category', 'doors', 'year',  'rentalValue', 'actions'];
   vehicleDataSource = new MatTableDataSource();
   vehicleResultsLength = 0;
   @ViewChild(MatPaginator) vehiclePaginator: MatPaginator;
@@ -58,7 +58,7 @@ export class AdminComponent implements OnInit {
 
     const dialogRef = this.dialog.open(VehicleDialogComponent, dialogConfig);
 
-    dialogRef.componentInstance.description = 'Cadastro'
+    dialogRef.componentInstance.description = 'Cadastrar veículo'
     dialogRef.componentInstance.status = 'Salvar';
 
     dialogRef.afterClosed().subscribe(result => {
@@ -91,7 +91,7 @@ export class AdminComponent implements OnInit {
 
     const dialogRef = this.dialog.open(VehicleDialogComponent, dialogConfig);
 
-    dialogRef.componentInstance.description = 'Atualização';
+    dialogRef.componentInstance.description = 'Atualizar veículo';
     dialogRef.componentInstance.status = 'Atualizar';
 
     dialogRef.afterClosed().subscribe(result => {
@@ -128,6 +128,9 @@ export class AdminComponent implements OnInit {
     dialogRef.componentInstance.buttonAction = 'Atualizar';
 
     dialogRef.afterClosed().subscribe(r => {
+      if(!r) {
+        return;
+      }
       console.log(r);
       const rent = new RentDTO();
       rent.date = r.toLocaleDateString();

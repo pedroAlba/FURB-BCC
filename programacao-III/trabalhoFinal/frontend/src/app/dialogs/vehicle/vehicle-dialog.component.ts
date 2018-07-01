@@ -40,7 +40,6 @@ export class VehicleDialogComponent implements OnInit{
             year: [year, Validators.required],
             category: [category, Validators.required],
             rentalValue: [rentalValue, Validators.required],
-            characteristics: [characteristics, Validators.required],
             imageURL: [imageURL, Validators.required],
             brand: [brand, Validators.required],
         });
