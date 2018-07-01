@@ -1,4 +1,0 @@
-Lembrem-se que precisa de 2 CRUDs completos.
-Parece que ou só edita ou só exclui da forma que está.
-Campos do cadastro estão muito esticados para cima (altos), não deve ser assim. 
-Campos numéricos das tabelas poderiam ser alinhados na direita também.
